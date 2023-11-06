@@ -41,7 +41,7 @@ def main():
         used_plate = st.text_input('Placa:')
         renavam = st.text_input('RENAVAM:')
         chassis_used = st.text_input('Chassi:')
-        km = st.number_input('KM:', step=1)
+        km = st.text_input('KM:')
         payment_form = st.text_area('Forma de Pagamento:')
 
         st.subheader('Observações:')
