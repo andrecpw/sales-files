@@ -18,10 +18,11 @@ def main():
         st.subheader('Cliente:')
         name = st.text_input('Nome:')
         cpf = st.text_input('CPF:')
-        rg = st.text_input('RGtest:')
+        rg = st.text_input('RG:')
         birth_date = st.date_input(
             label='Data de Nascimento:',
-            min_value=dt.datetime.today() - dt.timedelta(years=100)
+            min_value=dt.date(1920, 1, 1)
+            format=("DD/MM/YYYY")
         )
         phone = st.text_input('Telefone:')
         mobile = st.text_input('Celular:')
