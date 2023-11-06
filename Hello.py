@@ -21,7 +21,7 @@ def main():
         rg = st.text_input('RG:')
         birth_date = st.date_input(
             label='Data de Nascimento:',
-            min_value=dt.date(1920, 1, 1)
+            min_value=dt.date(1920, 1, 1),
             format=("DD/MM/YYYY")
         )
         phone = st.text_input('Telefone:')
