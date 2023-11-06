@@ -19,7 +19,7 @@ def main():
         name = st.text_input('Nome:')
         cpf = st.text_input('CPF:')
         rg = st.text_input('RG:')
-        birth_date = st.date_input(label='Data de Nascimento:', min_value=datetime(1920, 1, 1))
+        birth_date = st.date_input(label='Data de Nascimento:', min_value=datetime.date(1920, 1, 1), format="DD/MM/YYYY")
         phone = st.text_input('Telefone:')
         mobile = st.text_input('Celular:')
         street = st.text_input('Rua:')
