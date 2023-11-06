@@ -1,5 +1,5 @@
 import streamlit as st
-from datetime import datetime
+import datetime
 
 # Function to process the form data (this is where you would add your PDF filling logic)
 def process_form_data(form_data):
@@ -19,7 +19,11 @@ def main():
         name = st.text_input('Nome:')
         cpf = st.text_input('CPF:')
         rg = st.text_input('RG:')
-        birth_date = st.date_input(label='Data de Nascimento:', min_value=datetime.date(1920, 1, 1), format="DD/MM/YYYY")
+        birth_date = st.date_input(
+            label='Data de Nascimento:',
+            min_value=datetime.date(1920, 1, 1),
+            format="DD/MM/YYYY"
+        )
         phone = st.text_input('Telefone:')
         mobile = st.text_input('Celular:')
         street = st.text_input('Rua:')
