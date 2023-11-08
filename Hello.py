@@ -25,8 +25,8 @@ def main():
             min_value=dt.date(1920, 1, 1),
             format=("DD/MM/YYYY")
         )
-        phone = st.text_input('Telefone:')
         mobile = st.text_input('Celular:')
+        phone = st.text_input('Telefone:')
         street = st.text_input('Rua:')
         street_no = st.text_input('No:')
         district = st.text_input('Bairro:')
@@ -66,17 +66,18 @@ def main():
 
         st.subheader('Observações:')
         observations = st.text_input('Observações:')
-        authorization = st.checkbox('Autorizo a retirar o veículo acima descrito')
+        authorization = st.checkbox('Outra pessoa irá retirar o veículo')
+        auth_retriever = st.text_input('Nome da pessoa:')
 
         st.subheader('Serviços:')
         free = 'Loja'
         cust = 'Cliente'
-        emplacamento = st.radio('Emplacamento/Transferência', [free, cust], horizontal=True)
-        ipva = st.radio('IPVA', [free, cust], horizontal=True)
-        plate_choice = st.radio('Escolha de Placa', [free, cust], horizontal=True)
+        emplacamento = st.radio('Emplacamento/Transferência', [cust, free], horizontal=True)
+        ipva = st.radio('IPVA', [cust, free], horizontal=True)
+        plate_choice = st.radio('Escolha de Placa', [cust, free], horizontal=True)
         plate_choice_text = st.text_input('Observação Escolha de Placa:')
         other_text = st.text_input('Outros:')
-        other = st.radio('Outros', [free, cust], horizontal=True)
+        other = st.radio('Outros', [cust, free], horizontal=True)
 
         # Form submit button
         submit_button = st.form_submit_button(label='Submit')
@@ -98,21 +99,37 @@ def main():
             'email': email,
             'vehicle': vehicle,
             'model': model,
+            'optionals': optionals,
             'color': color,
             'year_model': year_model,
             'chassis': chassis,
             'price': price,
             'plate': plate,
+            'used_vehicle': used_vehicle,
+            'used_value': used_value,
             'used_plate': used_plate,
             'renavam': renavam,
-            'chassis_used': chassis_used,
+            'used_chassis': used_chassis,
+            'used_color': used_color,
+            'used_py': used_py,
+            'used_my': used_my,
             'km': km,
+            'debt': debt,
+            'nf': nf,
+            'financing': financing,
+            'bank': bank,
+            'n_payments': n_payments,
+            'installments': installments,
             'payment_form': payment_form,
             'observations': observations,
             'authorization': authorization,
+            'auth_retriever': auth_retriever,
             'emplacamento': emplacamento,
             'ipva': ipva,
-            'plate_choice': plate_choice
+            'plate_choice': plate_choice,
+            'plate_choice_text': plate_choice_text,
+            'other_text': other_text,
+            'other': other
         }
         process_form_data(form_data)
 
