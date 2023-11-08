@@ -74,10 +74,10 @@ def main():
         cust = 'Cliente'
         emplacamento = st.radio('Emplacamento/Transferência', [cust, free], horizontal=True)
         ipva = st.radio('IPVA', [cust, free], horizontal=True)
-        plate_choice = st.radio('Escolha de Placa', [cust, free], horizontal=True)
+        plate_choice = st.radio('Escolha de Placa', ['Não', cust, free], horizontal=True)
         plate_choice_text = st.text_input('Observação Escolha de Placa:')
         other_text = st.text_input('Outros:')
-        other = st.radio('Outros', [cust, free], horizontal=True)
+        other = st.radio('Outros', ['Não', cust, free], horizontal=True)
 
         # Form submit button
         submit_button = st.form_submit_button(label='Submit')
