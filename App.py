@@ -7,9 +7,10 @@ def process_form_data(form_data):
     st.write("Form Submitted. Here's the data:")
     st.json(form_data)  # For demonstration, just display the data as JSON in the app
 
+# Set page config
+st.set_page_config(page_title="Ficha de Vendas", page_icon="📝")
+
 def main():
-    # Set page config
-    st.set_page_config(page_title="Ficha de Vendas", page_icon="📝")
 
     st.title('Ficha de Vendas')
 
@@ -36,6 +37,7 @@ def main():
         st.subheader('Negociação:')
         vehicle = st.text_input('Veículo:')
         model = st.text_input('Modelo:')
+        optionals = st.text_input('Opcionais:')
         color = st.text_input('Cor:')
         year_model = st.text_input('Ano/Modelo:')
         chassis = st.text_input('Chassi:')
@@ -43,20 +45,38 @@ def main():
         plate = st.text_input('Placa:')
 
         st.subheader('Veículo Usado:')
+        used_vehicle = st.text_input('Veículo Usado:')
+        used_value = st.text_input('Valor:')
         used_plate = st.text_input('Placa do Veículo Usado:', key='used_plate')
         renavam = st.text_input('RENAVAM do Veículo Usado:', key='renavam')
-        chassis_used = st.text_input('Chassi do Veículo Usado:', key='chassis_used')
+        used_chassis = st.text_input('Chassi do Veículo Usado:', key='used_chassis')
+        used_color = st.text_input('Cor:', key='used_color')
+        used_py = st.text_input('Ano Produção:')
+        used_my = st.text_input('Ano Modelo:')
         km = st.text_input('KM do Veículo Usado:', key='km')
+        debt = st.text_input('Quitação:')
+
+        st.subheader('Forma de Pagamento:')
+        nf = st.text_input('Valor Nota Fiscal:')
+        financing = st.text_input('Valor Financiado:')
+        bank = st.text_input('Banco:')
+        n_payments = st.text_input('Número de Parcelas:')
+        installments = st.text_input('Valor Parcela')
         payment_form = st.text_area('Forma de Pagamento:', key='payment_form')
 
         st.subheader('Observações:')
-        observations = st.text_area('Observações:')
+        observations = st.text_input('Observações:')
         authorization = st.checkbox('Autorizo a retirar o veículo acima descrito')
 
         st.subheader('Serviços:')
-        emplacamento = st.checkbox('Emplacamento/Transferência')
-        ipva = st.checkbox('IPVA')
-        plate_choice = st.checkbox('Escolha de Placa')
+        free = 'Loja'
+        cust = 'Cliente'
+        emplacamento = st.radio('Emplacamento/Transferência', [free, cust], horizontal=True)
+        ipva = st.radio('IPVA', [free, cust], horizontal=True)
+        plate_choice = st.radio('Escolha de Placa', [free, cust], horizontal=True)
+        plate_choice_text = st.text_input('Observação Escolha de Placa:')
+        other_text = st.text_input('Outros:')
+        other = st.radio('Outros', [free, cust], horizontal=True)
 
         # Form submit button
         submit_button = st.form_submit_button(label='Submit')
