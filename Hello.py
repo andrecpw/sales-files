@@ -26,10 +26,6 @@ def process_form_data(form_data):
         form_data["other_cust"] = "True"
 
     st.write("Form Submitted.")
-    st.write(form_data["emplacamento_cust"])
-    st.write(form_data["ipva_cust"])
-    st.write(form_data["plate_choice_cust"])
-    st.write(form_data["other_cust"])
     
     return form_data
 
@@ -159,11 +155,6 @@ def main():
             'other': other
         }
         form_data = process_form_data(form_data)
-
-        st.write(form_data["emplacamento_cust"])
-        st.write(form_data["ipva_cust"])
-        st.write(form_data["plate_choice_cust"])
-        st.write(form_data["other_cust"])
 
         template_pdf_path = "Templates/NOVA Ficha de Vendas V4.pdf"
         filled_pdf_path = f"Output/FV_{form_data['name']}.pdf"
