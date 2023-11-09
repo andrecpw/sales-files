@@ -6,24 +6,24 @@ from Scripts.pdf_generator import fill_pdf
 def process_form_data(form_data):
     # You can process and save the data, or generate a PDF using a library like PyPDF2 or reportlab
     if form_data["emplacamento"] == "Loja":
-        form_data["emplacamento_free"] = True
+        form_data["emplacamento_free"] = "True"
     elif form_data["emplacamento"] == "Cliente":
-        form_data["emplacamento_cust"] = True
+        form_data["emplacamento_cust"] = "True"
 
     if form_data["ipva"] == "Loja":
-        form_data["ipva_free"] = True
+        form_data["ipva_free"] = "True"
     elif form_data["ipva"] == "Cliente":
-        form_data["ipva_cust"] = True
+        form_data["ipva_cust"] = "True"
 
     if form_data["plate_choice"] == "Loja":
-        form_data["plate_choice_free"] = True
+        form_data["plate_choice_free"] = "True"
     elif form_data["plate_choice"] == "Cliente":
-        form_data["plate_choice_cust"] = True
+        form_data["plate_choice_cust"] = "True"
 
     if form_data["other"] == "Loja":
-        form_data["other_free"] = True
+        form_data["other_free"] = "True"
     elif form_data["other"] == "Cliente":
-        form_data["other_cust"] = True
+        form_data["other_cust"] = "True"
 
     st.write("Form Submitted.")
     st.write(form_data["emplacamento"])
@@ -88,7 +88,8 @@ def main():
         bank = st.text_input('Banco:')
         n_payments = st.text_input('Número de Parcelas:')
         installments = st.text_input('Valor Parcela')
-        payment_form = st.text_area('Forma de Pagamento:', height=3, key='payment_form')
+        #TODO figure out the text area size
+        payment_form = st.text_area('Forma de Pagamento:', key='payment_form')
 
         st.subheader('Observações:')
         observations = st.text_input('Observações:')
@@ -158,6 +159,11 @@ def main():
             'other': other
         }
         form_data = process_form_data(form_data)
+
+        st.write(form_data["emplacamento"])
+        st.write(form_data["ipva"])
+        st.write(form_data["plate_choice"])
+        st.write(form_data["other"])
 
         template_pdf_path = "Templates/NOVA Ficha de Vendas V4.pdf"
         filled_pdf_path = f"Output/FV_{form_data['name']}.pdf"
