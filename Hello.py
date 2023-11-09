@@ -25,8 +25,7 @@ def process_form_data(form_data):
     elif form_data["other"] == "Cliente":
         form_data["other_cust"] = "True"
 
-    st.write("Form Submitted. Here's the data:")
-    st.json(form_data)  # For demonstration, just display the data as JSON in the app
+    st.write("Form Submitted.")
     
     return form_data
 
@@ -51,7 +50,7 @@ def main():
         mobile = st.text_input('Celular:')
         phone = st.text_input('Telefone:')
         street = st.text_input('Rua:')
-        street_no = st.text_input('No:')
+        street_no = st.text_input('Número:')
         district = st.text_input('Bairro:')
         city = st.text_input('Cidade:')
         cep = st.text_input('CEP:')
