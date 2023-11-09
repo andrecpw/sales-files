@@ -14,3 +14,16 @@ def fill_pdf(input_pdf_path, output_pdf_path, form_data):
                     )
 
     pdfrw.PdfWriter().write(output_pdf_path, template_pdf)
+
+
+def flatten_pdf(input_pdf, output_pdf):
+    reader = PdfReader(input_pdf)
+    writer = PdfWriter(output_pdf)
+
+    for page in reader.pages:
+        if page.Annots:
+            for annot in page.Annots:
+                if annot.Subtype == "/Widget":
+                    annot.update(pdfrw.PdfDict(Ff=1))  # Make field read-only
+
+    writer.write(output_pdf, reader)
