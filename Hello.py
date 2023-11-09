@@ -27,17 +27,9 @@ def process_form_data(form_data):
 
     st.write("Form Submitted.")
     st.write(form_data["emplacamento"])
-    st.write(form_data["emplacamento_free"])
-    st.write(form_data["emplacamento_cust"])
     st.write(form_data["ipva"])
-    st.write(form_data["ipva_free"])
-    st.write(form_data["ipva_cust"])
     st.write(form_data["plate_choice"])
-    st.write(form_data["plate_choice_free"])
-    st.write(form_data["plate_choice_cust"])
     st.write(form_data["other"])
-    st.write(form_data["other_free"])
-    st.write(form_data["other_cust"])
     
     return form_data
 
