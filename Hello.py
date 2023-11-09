@@ -62,7 +62,7 @@ def main():
         bank = st.text_input('Banco:')
         n_payments = st.text_input('Número de Parcelas:')
         installments = st.text_input('Valor Parcela')
-        payment_form = st.text_area('Forma de Pagamento:', key='payment_form')
+        payment_form = st.text_area('Forma de Pagamento:', height=3, key='payment_form')
 
         st.subheader('Observações:')
         observations = st.text_input('Observações:')

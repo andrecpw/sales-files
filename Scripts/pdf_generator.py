@@ -1,41 +1,19 @@
-from PyPDF2 import PdfReader, PdfWriter, PdfName
+import pdfrw
 
 def fill_pdf(input_pdf_path, output_pdf_path, form_data):
-    reader = PdfReader(input_pdf_path)
-    writer = PdfWriter()
+    template_pdf = pdfrw.PdfReader(input_pdf_path)
+    annotations = template_pdf.pages[0]['/Annots']
 
-    # Loop through each page in the input PDF
-    for page in reader.pages:
-        # Retrieve the annotations from the page
-        annotations = page.get("/Annots")
-        if annotations is None:
-            continue
+    for annotation in annotations:
+        if annotation['/Subtype'] == '/Widget':
+            if annotation['/T']:
+                key = annotation['/T'][1:-1]  # Remove parentheses
+                if key in form_data:
+                    annotation.update(
+                        pdfrw.PdfDict(V='{}'.format(form_data[key]))
+                    )
 
-        # Need to resolve each annotation if it is an indirect object
-        for annotation in annotations:
-            if isinstance(annotation, IndirectObject):
-                annotation = annotation.get_object()
-
-            # Check if it is a widget (form field) annotation
-            if annotation.get("/Subtype") == "/Widget":
-                field_name = annotation.get("/T")
-                field_value = form_data.get(field_name)
-
-                # If the field name is in the form data, update the value
-                if field_name in form_data and field_value is not None:
-                    # Create a new dictionary with updated field value
-                    field_dictionary = annotation.get("/AA")
-                    if field_dictionary:
-                        field_dictionary.update({
-                            PdfName("/V"): PdfString(field_value)
-                        })
-
-        # Add the updated page to the writer
-        writer.add_page(page)
-
-    # Write out the filled PDF to a new file
-    with open(output_pdf_path, "wb") as output_stream:
-        writer.write(output_stream)
+    pdfrw.PdfWriter().write(output_pdf_path, template_pdf)
 
 # Example usage
 if __name__ == "__main__":
@@ -82,7 +60,8 @@ if __name__ == "__main__":
         "auth_retriever":"",
         "emplacamento":"Loja",
         "ipva":"Cliente",
-        "plate_choice":"Cliente",
+        "ipva_free":"True",
+        "plate_choice_cust":"True",
         "plate_choice_text":"QIE9259",
         "other_text":"",
         "other":"Cliente"
