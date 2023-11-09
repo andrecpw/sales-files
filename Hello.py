@@ -1,11 +1,34 @@
 import streamlit as st
 import datetime as dt
+from Scripts.pdf_generator import fill_pdf
 
 # Function to process the form data (this is where you would add your PDF filling logic)
 def process_form_data(form_data):
     # You can process and save the data, or generate a PDF using a library like PyPDF2 or reportlab
+    if form_data["emplacamento"] == "Loja":
+        form_data["emplacamento_free"] = "True"
+    elif form_data["emplacamento"] == "Cliente":
+        form_data["emplacamento_cust"] = "True"
+
+    if form_data["ipva"] == "Loja":
+        form_data["ipva_free"] = "True"
+    elif form_data["ipva"] == "Cliente":
+        form_data["ipva_cust"] = "True"
+
+    if form_data["plate_choice"] == "Loja":
+        form_data["plate_choice_free"] = "True"
+    elif form_data["plate_choice"] == "Cliente":
+        form_data["plate_choice_cust"] = "True"
+
+    if form_data["other"] == "Loja":
+        form_data["other_free"] = "True"
+    elif form_data["other"] == "Cliente":
+        form_data["other_cust"] = "True"
+
     st.write("Form Submitted. Here's the data:")
     st.json(form_data)  # For demonstration, just display the data as JSON in the app
+    
+    return form_data
 
 # Set page config
 st.set_page_config(page_title="Ficha de Vendas", page_icon="📝")
@@ -131,7 +154,20 @@ def main():
             'other_text': other_text,
             'other': other
         }
-        process_form_data(form_data)
+        form_data = process_form_data(form_data)
+
+        template_pdf_path = "Templates/NOVA Ficha de Vendas V4.pdf"
+        filled_pdf_path = f"Output/FV_{form_data['name']}.pdf"
+        fill_pdf(template_pdf_path, filled_pdf_path, form_data)
+
+        # Create a link to download the PDF
+        with open(filled_pdf_path, "rb") as file:
+            st.download_button(
+                label="Download Ficha de Vendas",
+                data=file,
+                file_name=f"FV_{form_data['name']}.pdf",
+                mime="application/octet-stream"
+            )
 
 if __name__ == "__main__":
     main()
