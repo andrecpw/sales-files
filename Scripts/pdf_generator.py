@@ -17,8 +17,8 @@ def fill_pdf(input_pdf_path, output_pdf_path, form_data):
 
 
 def flatten_pdf(input_pdf, output_pdf):
-    reader = PdfReader(input_pdf)
-    writer = PdfWriter(output_pdf)
+    reader = pdfrw.PdfReader(input_pdf)
+    writer = pdfrw.PdfWriter(output_pdf)
 
     for page in reader.pages:
         if page.Annots:
