@@ -18,7 +18,7 @@ def fill_pdf(input_pdf_path, output_pdf_path, form_data):
 
 def flatten_pdf(input_pdf, output_pdf):
     reader = pdfrw.PdfReader(input_pdf)
-    writer = pdfrw.PdfWriter(output_pdf)
+    writer = pdfrw.PdfWriter()  # Initialize without specifying the output file
 
     for page in reader.pages:
         if page.Annots:
@@ -26,4 +26,4 @@ def flatten_pdf(input_pdf, output_pdf):
                 if annot.Subtype == "/Widget":
                     annot.update(pdfrw.PdfDict(Ff=1))  # Make field read-only
 
-    writer.write(output_pdf, reader)
+    writer.write(output_pdf, reader)  # Specify the output file here
