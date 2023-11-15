@@ -1,6 +1,6 @@
 import pdfrw
 
-def fill_fv(input_pdf_path, output_pdf_path, form_data):
+def fill_pdf(input_pdf_path, output_pdf_path, form_data):
     template_pdf = pdfrw.PdfReader(input_pdf_path)
     annotations = template_pdf.pages[0]['/Annots']
 

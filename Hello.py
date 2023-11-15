@@ -1,29 +1,29 @@
 import streamlit as st
 import datetime as dt
-from Scripts.pdf_generator import fill_fv
+from Scripts.pdf_generator import fill_pdf
 
 # Function to process the form data (this is where you would add your PDF filling logic)
 def process_form_data(form_data):
     # You can process and save the data, or generate a PDF using a library like PyPDF2 or reportlab
-    if form_data["emplacamento"] == "Loja":
-        form_data["emplacamento_free"] = "True"
-    elif form_data["emplacamento"] == "Cliente":
-        form_data["emplacamento_cust"] = "True"
+    if form_data["EMPLACAMENTO_PGTO"] == "Loja":
+        form_data["EMPLACAMENTO_LOJA"] = "X"
+    elif form_data["EMPLACAMENTO_PGTO"] == "Cliente":
+        form_data["EMPLACAMENTO_CLIENTE"] = "X"
 
-    if form_data["ipva"] == "Loja":
-        form_data["ipva_free"] = "True"
-    elif form_data["ipva"] == "Cliente":
-        form_data["ipva_cust"] = "True"
+    if form_data["IPVA_PGTO"] == "Loja":
+        form_data["IPVA_LOJA"] = "X"
+    elif form_data["IPVA_PGTO"] == "Cliente":
+        form_data["IPVA_CLIENTE"] = "X"
 
-    if form_data["plate_choice"] == "Loja":
-        form_data["plate_choice_free"] = "True"
-    elif form_data["plate_choice"] == "Cliente":
-        form_data["plate_choice_cust"] = "True"
+    if form_data["ESCOLHA_PLACA_PGTO"] == "Loja":
+        form_data["ESCOLHA_PLACA_LOJA"] = "X"
+    elif form_data["ESCOLHA_PLACA_PGTO"] == "Cliente":
+        form_data["ESCOLHA_PLACA_CLIENTE"] = "X"
 
-    if form_data["other"] == "Loja":
-        form_data["other_free"] = "True"
-    elif form_data["other"] == "Cliente":
-        form_data["other_cust"] = "True"
+    if form_data["OUTROS_PGTO"] == "Loja":
+        form_data["OUTROS_LOJA"] = "X"
+    elif form_data["OUTROS_PGTO"] == "Cliente":
+        form_data["OUTROS_CLIENTE"] = "X"
 
     st.write("Form Submitted.")
     
@@ -39,68 +39,72 @@ def main():
     # Use a form for better user experience (submits all at once)
     with st.form(key='sales_form'):
         st.subheader('Cliente:')
-        name = st.text_input('Nome:')
-        cpf = st.text_input('CPF:')
-        rg = st.text_input('RG:')
-        birth_date = st.date_input(
+        CLIENTE = st.text_input('Nome:')
+        CPF = st.text_input('CPF:')
+        RG = st.text_input('RG:')
+        EXPEDICAO = st.text_input('Expedição:')
+        DATA_NASCIMENTO = st.date_input(
             label='Data de Nascimento:',
             min_value=dt.date(1920, 1, 1),
             format=("DD/MM/YYYY")
         )
-        mobile = st.text_input('Celular:')
-        phone = st.text_input('Telefone:')
-        street = st.text_input('Rua:')
-        street_no = st.text_input('Número:')
-        district = st.text_input('Bairro:')
-        city = st.text_input('Cidade:')
-        cep = st.text_input('CEP:')
-        email = st.text_input('Email:')
+        CELULAR = st.text_input('Celular:')
+        FONE = st.text_input('Telefone:')
+        RUA = st.text_input('Rua:')
+        NUMERO = st.text_input('Número:')
+        BAIRRO = st.text_input('Bairro:')
+        CIDADE = st.text_input('Cidade:')
+        ESTADO = st.text_input('Estado:')
+        CEP = st.text_input('CEP:')
+        EMAIL = st.text_input('Email:')
 
         st.subheader('Negociação:')
-        vehicle = st.text_input('Veículo:')
-        model = st.text_input('Modelo:')
-        optionals = st.text_input('Opcionais:')
-        color = st.text_input('Cor:')
-        year_model = st.text_input('Ano/Modelo:')
-        chassis = st.text_input('Chassi:')
-        price = st.text_input('Preço:')
-        plate = st.text_input('Placa:')
+        MARCA = st.text_input('Marca:')
+        MODELO = st.text_input('Modelo:')
+        OPCIONAIS = st.text_input('Opcionais:')
+        COMBUSTIVEL = st.text_input('Combustível:')
+        COR = st.text_input('Cor:')
+        PY = st.text_input('Ano de Produção:')
+        MY = st.text_input('Ano do Modelo:')
+        CHASSI = st.text_input('Chassi:')
+        PRECO = st.text_input('Preço:')
+        PLACA = st.text_input('Placa:')
 
         st.subheader('Veículo Usado:')
-        used_vehicle = st.text_input('Veículo Usado:')
-        used_value = st.text_input('Valor:')
-        used_plate = st.text_input('Placa do Veículo Usado:', key='used_plate')
-        renavam = st.text_input('RENAVAM do Veículo Usado:', key='renavam')
-        used_chassis = st.text_input('Chassi do Veículo Usado:', key='used_chassis')
-        used_color = st.text_input('Cor:', key='used_color')
-        used_py = st.text_input('Ano Produção:')
-        used_my = st.text_input('Ano Modelo:')
-        km = st.text_input('KM do Veículo Usado:', key='km')
-        debt = st.text_input('Quitação:')
+        USADO_VEICULO = st.text_input('Veículo Usado:')
+        USADO_VALOR = st.text_input('Valor:')
+        USADO_PLACA = st.text_input('Placa do Veículo Usado:')
+        USADO_RENAVAM = st.text_input('RENAVAM do Veículo Usado:')
+        USADO_CHASSI = st.text_input('Chassi do Veículo Usado:')
+        USADO_COR = st.text_input('Cor:')
+        USADO_PY = st.text_input('Ano Produção:')
+        USADO_MY = st.text_input('Ano Modelo:')
+        USADO_KM = st.text_input('KM do Veículo Usado:')
+        USADO_QUITACAO = st.text_input('Quitação:')
 
         st.subheader('Forma de Pagamento:')
-        nf = st.text_input('Valor Nota Fiscal:')
-        financing = st.text_input('Valor Financiado:')
-        bank = st.text_input('Banco:')
-        n_payments = st.text_input('Número de Parcelas:')
-        installments = st.text_input('Valor Parcela')
+        NF = st.text_input('Valor Nota Fiscal:')
+        FINANCIAMENTO = st.text_input('Valor Financiado:')
+        BANCO = st.text_input('Banco:')
+        N_PARCELAS = st.text_input('Número de Parcelas:')
+        VALOR_PARCELA = st.text_input('Valor Parcela')
         #TODO figure out the text area size
-        payment_form = st.text_area('Forma de Pagamento:', key='payment_form')
+        NEGOCIACAO = st.text_area('Forma de Pagamento: (Máximo 6 linhas)')
 
         st.subheader('Observações:')
-        observations = st.text_input('Observações:')
-        authorization = st.checkbox('Outra pessoa irá retirar o veículo')
-        auth_retriever = st.text_input('Nome da pessoa:')
+        OBSERVACAO = st.text_input('Observações:')
+        AUTORIZACAO = st.checkbox('Outra pessoa irá retirar o veículo')
+        AUTORIZACAO_AUTORIZADO = st.text_input('Nome da pessoa:')
 
         st.subheader('Serviços:')
         free = 'Loja'
         cust = 'Cliente'
-        emplacamento = st.radio('Emplacamento/Transferência', [cust, free], horizontal=True)
-        ipva = st.radio('IPVA', [cust, free], horizontal=True)
-        plate_choice = st.radio('Escolha de Placa', ['Não', cust, free], horizontal=True)
-        plate_choice_text = st.text_input('Observação Escolha de Placa:')
-        other_text = st.text_input('Outros:')
-        other = st.radio('Outros', ['Não', cust, free], horizontal=True)
+        EMPLACAMENTO_PGTO = st.radio('Emplacamento/Transferência', [cust, free], horizontal=True)
+        IPVA_PGTO = st.radio('IPVA', [cust, free], horizontal=True)
+        ESCOLHA_PLACA_PGTO = st.radio('Escolha de Placa', ['Não', cust, free], horizontal=True)
+        ESCOLHA_PLACA = st.text_input('Observação Escolha de Placa:')
+        OUTROS = st.text_input('Outros:')
+        OUTROS_PGTO = st.radio('Outros', ['Não', cust, free], horizontal=True)
 
         # Form submit button
         submit_button = st.form_submit_button(label='Submit')
@@ -108,67 +112,67 @@ def main():
     # Process the form data when the button is pressed
     if submit_button:
         form_data = {
-            'name': name,
-            'cpf': cpf,
-            'rg': rg,
-            'birth_date': str(birth_date),
-            'phone': phone,
-            'mobile': mobile,
-            'street': street,
-            'street_no': street_no,
-            'district': district,
-            'city': city,
-            'cep': cep,
-            'email': email,
-            'vehicle': vehicle,
-            'model': model,
-            'optionals': optionals,
-            'color': color,
-            'year_model': year_model,
-            'chassis': chassis,
-            'price': price,
-            'plate': plate,
-            'used_vehicle': used_vehicle,
-            'used_value': used_value,
-            'used_plate': used_plate,
-            'renavam': renavam,
-            'used_chassis': used_chassis,
-            'used_color': used_color,
-            'used_py': used_py,
-            'used_my': used_my,
-            'km': km,
-            'debt': debt,
-            'nf': nf,
-            'financing': financing,
-            'bank': bank,
-            'n_payments': n_payments,
-            'installments': installments,
-            'payment_form': payment_form,
-            'observations': observations,
-            'authorization': authorization,
-            'auth_retriever': auth_retriever,
-            'emplacamento': emplacamento,
-            'ipva': ipva,
-            'plate_choice': plate_choice,
-            'plate_choice_text': plate_choice_text,
-            'other_text': other_text,
-            'other': other
+            'CLIENTE': CLIENTE,
+            'CPF': CPF,
+            'RG': RG,
+            'DATA_NASCIMENTO': str(DATA_NASCIMENTO),
+            'FONE': FONE,
+            'CELULAR': CELULAR,
+            'RUA': RUA,
+            'NUMERO': NUMERO,
+            'ENDERECO': RUA + ", " + NUMERO,
+            'BAIRRO': BAIRRO,
+            'CIDADE': CIDADE,
+            'ESTADO': ESTADO,
+            'CEP': CEP,
+            'EMAIL': EMAIL,
+
+            'MARCA': MARCA,
+            'MODELO': MODELO,
+            'OPCIONAIS': OPCIONAIS,
+            'COMBUSTIVEL': COMBUSTIVEL,
+            'COR': COR,
+            'PY_MY': PY + "/" + MY,
+            'CHASSI': CHASSI,
+            'PRECO': PRECO,
+            'PLACA': PLACA,
+
+            'USADO_VEICULO': USADO_VEICULO,
+            'USADO_VALOR': USADO_VALOR,
+            'USADO_PLACA': USADO_PLACA,
+            'USADO_RENAVAM': USADO_RENAVAM,
+            'USADO_CHASSI': USADO_CHASSI,
+            'USADO_COR': USADO_COR,
+            'USADO_PY': USADO_PY,
+            'USADO_MY': USADO_MY,
+            'USADO_PY_MY': USADO_PY + "/" + USADO_MY,
+            'USADO_KM': USADO_KM,
+            'USADO_QUITACAO': USADO_QUITACAO,
+
+            'NF': NF,
+            'FINANCIAMENTO': FINANCIAMENTO,
+            'BANCO': BANCO,
+            'N_PARCELAS': N_PARCELAS,
+            'VALOR_PARCELA': VALOR_PARCELA,
+            'NEGOCIACAO': NEGOCIACAO,
+            'OBSERVACAO': OBSERVACAO,
+            'AUTORIZACAO': AUTORIZACAO,
+            'AUTORIZACAO_AUTORIZADO': AUTORIZACAO_AUTORIZADO,
+            'EMPLACAMENTO_PGTO': EMPLACAMENTO_PGTO,
+            'IPVA_PGTO': IPVA_PGTO,
+            'ESCOLHA_PLACA_PGTO': ESCOLHA_PLACA_PGTO,
+            'ESCOLHA_PLACA': ESCOLHA_PLACA,
+            'OUTROS': OUTROS,
+            'OUTROS_PGTO': OUTROS_PGTO
         }
 
         form_data = process_form_data(form_data)
 
-        template_pdf_path = "Templates/NOVA Ficha de Vendas V4.pdf"
+        template_pdf_path = "Templates\NOVA Ficha de Vendas V4 (FORM).pdf"
         filled_pdf_path = f"Output/FV_{form_data['name']}.pdf"
-        fill_fv(template_pdf_path, filled_pdf_path, form_data)
+        fill_pdf(template_pdf_path, filled_pdf_path, form_data)
 
         # Create a link to download the PDF
-        with open(filled_pdf_path, "rb") as file:
-            st.download_button(
-                label="Download Ficha de Vendas",
-                data=file,
-                file_name=f"FV_{form_data['name']}_formatavel.pdf",
-                mime="application/octet-stream"
-            )
         with open(filled_pdf_path, "rb") as file:
             st.download_button(
                 label="Download Ficha de Vendas",
@@ -176,7 +180,6 @@ def main():
                 file_name=f"FV_{form_data['name']}.pdf",
                 mime="application/octet-stream"
             )
-
 
 if __name__ == "__main__":
     main()
