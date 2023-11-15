@@ -1,6 +1,6 @@
 import pdfrw
 
-def fill_pdf(input_pdf_path, output_pdf_path, form_data):
+def fill_fv(input_pdf_path, output_pdf_path, form_data):
     template_pdf = pdfrw.PdfReader(input_pdf_path)
     annotations = template_pdf.pages[0]['/Annots']
 
@@ -14,16 +14,3 @@ def fill_pdf(input_pdf_path, output_pdf_path, form_data):
                     )
 
     pdfrw.PdfWriter().write(output_pdf_path, template_pdf)
-
-
-def flatten_pdf(input_pdf, output_pdf):
-    reader = pdfrw.PdfReader(input_pdf)
-    writer = pdfrw.PdfWriter()  # Initialize without specifying the output file
-
-    for page in reader.pages:
-        if page.Annots:
-            for annot in page.Annots:
-                if annot.Subtype == "/Widget":
-                    annot.update(pdfrw.PdfDict(Ff=1))  # Make field read-only
-
-    writer.write(output_pdf, reader)  # Specify the output file here

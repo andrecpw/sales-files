@@ -1,6 +1,6 @@
 import streamlit as st
 import datetime as dt
-from Scripts.pdf_generator import fill_pdf, flatten_pdf
+from Scripts.pdf_generator import fill_fv
 
 # Function to process the form data (this is where you would add your PDF filling logic)
 def process_form_data(form_data):
@@ -154,12 +154,12 @@ def main():
             'other_text': other_text,
             'other': other
         }
+
         form_data = process_form_data(form_data)
 
         template_pdf_path = "Templates/NOVA Ficha de Vendas V4.pdf"
-        filled_pdf_path = f"Output/FV_{form_data['name']}_formatavel.pdf"
-        fill_pdf(template_pdf_path, filled_pdf_path, form_data)
-        flatten_pdf(f"Output/FV_{form_data['name']}_formatavel.pdf", f"Output/FV_{form_data['name']}.pdf")
+        filled_pdf_path = f"Output/FV_{form_data['name']}.pdf"
+        fill_fv(template_pdf_path, filled_pdf_path, form_data)
 
         # Create a link to download the PDF
         with open(filled_pdf_path, "rb") as file:
