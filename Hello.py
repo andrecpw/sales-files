@@ -28,6 +28,14 @@ def process_form_data(form_data):
     elif form_data["OUTROS_PGTO"] == "Cliente":
         form_data["OUTROS_CLIENTE"] = "X"
 
+    if form_data.get("AUTORIZACAO_AUTORIZADO", "") != "":
+        form_data["AUTORIZACAO_CLIENTE"] = form_data["CLIENTE"]
+
+    # Process the NEGOCIACAO field
+    negociacao_parts = form_data.get("NEGOCIACAO", "").split('\n')
+    for i in range(1, 7):
+        form_data[f"NEGOCIACAO_{i}"] = negociacao_parts[i - 1] if i <= len(negociacao_parts) else ""
+
     st.write("Form Submitted.")
     
     return form_data
@@ -81,6 +89,7 @@ def main():
         CHASSI = st.text_input('Chassi:')
         PRECO = st.text_input('Preço:')
         PLACA = st.text_input('Placa:')
+        RENAVAM = st.text_input('RENAVAM:')
 
         st.subheader('Veículo Usado:')
         USADO_VEICULO = st.text_input('Veículo Usado:')
@@ -148,6 +157,7 @@ def main():
             'CHASSI': CHASSI,
             'PRECO': PRECO,
             'PLACA': PLACA,
+            'RENAVAM': RENAVAM,
 
             'USADO_VEICULO': USADO_VEICULO,
             'USADO_VALOR': USADO_VALOR,
