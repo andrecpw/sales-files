@@ -1,25 +1,23 @@
-from PyPDF2 import PdfReader, PdfWriter
-from PyPDF2.generic import NameObject
+import pdfrw
+from pdfrw import PdfReader, PdfWriter, PdfDict, PdfObject
 
 def fill_pdf(input_pdf_path, output_pdf_path, form_data):
-    reader = PdfReader(input_pdf_path)
-    writer = PdfWriter()
+    template_pdf = PdfReader(input_pdf_path)
 
-    for page in reader.pages:
+    for page in template_pdf.pages:
         annotations = page.get("/Annots")
-        if annotations is not None:
+        if annotations:
             for annotation in annotations:
-                if isinstance(annotation, IndirectObject):
-                    annotation = annotation.get_object()
-
                 if annotation.get("/Subtype") == "/Widget" and annotation.get("/T"):
-                    field_name = annotation["/T"][1:-1]  # Remove parentheses
-                    if field_name in form_data and form_data[field_name] is not None:
-                        annotation.update({
-                            NameObject("/V"): form_data[field_name]
-                        })
+                    key = annotation["/T"][1:-1]  # Remove parentheses
+                    if key in form_data:
+                        annotation.update(
+                            pdfrw.PdfDict(V="{}".format(form_data[key]))
+                        )
+                        annotation.update(PdfDict(AP=""))
 
-        writer.add_page(page)
+    # Flag the form to update appearances
+    if "/AcroForm" in template_pdf.Root:
+        template_pdf.Root.AcroForm.update(PdfDict(NeedAppearances=PdfObject("true")))
 
-    with open(output_pdf_path, 'wb') as output_stream:
-        writer.write(output_stream)
+    PdfWriter().write(output_pdf_path, template_pdf)
