@@ -1,5 +1,8 @@
 import streamlit as st
 import datetime as dt
+import tempfile
+import zipfile
+import os
 from Scripts.pdf_generator import fill_pdf
 
 # Function to process the form data (this is where you would add your PDF filling logic)
@@ -28,6 +31,16 @@ def process_form_data(form_data):
     st.write("Form Submitted.")
     
     return form_data
+
+# Function to create a PDF and return its path with a custom name
+def create_pdf_and_return_path(template_path, form_data, prefix):
+    # Create a temporary file with a custom name
+    fd, path = tempfile.mkstemp(suffix=".pdf", prefix=f"{prefix}_{form_data['CLIENTE']}_")
+    os.close(fd)  # Close the file descriptor
+
+    # Fill the PDF with data
+    fill_pdf(template_path, path, form_data)
+    return path
 
 # Set page config
 st.set_page_config(page_title="Ficha de Vendas", page_icon="📝")
@@ -168,18 +181,38 @@ def main():
 
         form_data = process_form_data(form_data)
 
-        template_pdf_path = "Templates\NOVA Ficha de Vendas V4 (FORM).pdf"
-        filled_pdf_path = f"Output/FV_{form_data['name']}.pdf"
-        fill_pdf(template_pdf_path, filled_pdf_path, form_data)
+        # Always fill the primary PDF template
+        pdf_paths.append(create_pdf_and_return_path("Templates/NOVA Ficha de Vendas V4 (FORM).pdf", form_data, "FV"))
 
-        # Create a link to download the PDF
-        with open(filled_pdf_path, "rb") as file:
-            st.download_button(
-                label="Download Ficha de Vendas",
-                data=file,
-                file_name=f"FV_{form_data['name']}.pdf",
-                mime="application/octet-stream"
-            )
+        # Fill Procuração de Comprador based on CPF length
+        if form_data.get("PLACA", "") != "":
+            if len(form_data.get("CPF", "")) == 11:
+                pdf_paths.append(create_pdf_and_return_path("Templates/PROCURAÇÃO DE COMPRADOR PF (FORM).pdf", form_data, "Proc"))
+            elif len(form_data.get("CPF", "")) == 14:
+                pdf_paths.append(create_pdf_and_return_path("Templates/PROCURAÇÃO DE COMPRADOR PJ (FORM).pdf", form_data, "Proc"))
+
+        # Fill Termo de Multas based on CPF length
+        if form_data.get("USADO_VEICULO", "") != "":
+            if len(form_data.get("CPF", "")) == 11:
+                pdf_paths.append(create_pdf_and_return_path("Templates/Termo de Multas - PF (FORM).pdf", form_data, "TM"))
+            elif len(form_data.get("CPF", "")) == 14:
+                pdf_paths.append(create_pdf_and_return_path("Templates/Termo de Multas - PJ (FORM).pdf", form_data, "TM"))
+
+        # Create a ZIP file from the generated PDFs
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".zip") as tmpzip:
+            with zipfile.ZipFile(tmpzip.name, 'w') as zipf:
+                for pdf in pdf_paths:
+                    zipf.write(pdf, os.path.basename(pdf))
+                    os.remove(pdf)  # Remove the PDF file after adding it to the ZIP
+
+            # Provide a download button for the ZIP file
+            with open(tmpzip.name, "rb") as file:
+                st.download_button(
+                    label="Download PDFs as ZIP",
+                    data=file,
+                    file_name="filled_forms.zip",
+                    mime="application/zip"
+                )
 
 if __name__ == "__main__":
     main()
