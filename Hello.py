@@ -150,6 +150,7 @@ def main():
 
             'MARCA': MARCA,
             'MODELO': MODELO,
+            'VEICULO': MARCA + " / " + MODELO,
             'OPCIONAIS': OPCIONAIS,
             'COMBUSTIVEL': COMBUSTIVEL,
             'COR': COR,
@@ -193,21 +194,21 @@ def main():
         pdf_paths = []
 
         # Always fill the primary PDF template
-        pdf_paths.append(create_pdf_and_return_path("Templates/NOVA Ficha de Vendas V4 (FORM).pdf", form_data, "FV"))
+        pdf_paths.append(create_pdf_and_return_path("Templates/NOVA Ficha de Vendas V4.pdf", form_data, "FV"))
 
         # Fill Procuração de Comprador based on CPF length
         if form_data.get("PLACA", "") != "":
             if len(form_data.get("CPF", "")) == 11:
-                pdf_paths.append(create_pdf_and_return_path("Templates/PROCURAÇÃO DE COMPRADOR PF (FORM).pdf", form_data, "Proc"))
+                pdf_paths.append(create_pdf_and_return_path("Templates/PROCURAÇÃO DE COMPRADOR PF.pdf", form_data, "Proc"))
             elif len(form_data.get("CPF", "")) == 14:
-                pdf_paths.append(create_pdf_and_return_path("Templates/PROCURAÇÃO DE COMPRADOR PJ (FORM).pdf", form_data, "Proc"))
+                pdf_paths.append(create_pdf_and_return_path("Templates/PROCURAÇÃO DE COMPRADOR PJ.pdf", form_data, "Proc"))
 
         # Fill Termo de Multas based on CPF length
         if form_data.get("USADO_VEICULO", "") != "":
             if len(form_data.get("CPF", "")) == 11:
-                pdf_paths.append(create_pdf_and_return_path("Templates/Termo de Multas - PF (FORM).pdf", form_data, "TM"))
+                pdf_paths.append(create_pdf_and_return_path("Templates/Termo de Multas - PF.pdf", form_data, "TM"))
             elif len(form_data.get("CPF", "")) == 14:
-                pdf_paths.append(create_pdf_and_return_path("Templates/Termo de Multas - PJ (FORM).pdf", form_data, "TM"))
+                pdf_paths.append(create_pdf_and_return_path("Templates/Termo de Multas - PJ.pdf", form_data, "TM"))
 
         # Create a ZIP file from the generated PDFs
         with tempfile.NamedTemporaryFile(delete=False, suffix=".zip") as tmpzip:
