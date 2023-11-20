@@ -55,7 +55,6 @@ def main():
         CLIENTE = st.text_input('Nome:')
         CPF = st.text_input('CPF:')
         RG = st.text_input('RG:')
-        EXPEDICAO = st.text_input('Expedição:')
         DATA_NASCIMENTO = st.date_input(
             label='Data de Nascimento:',
             min_value=dt.date(1920, 1, 1),
@@ -89,7 +88,7 @@ def main():
         USADO_PLACA = st.text_input('Placa do Veículo Usado:')
         USADO_RENAVAM = st.text_input('RENAVAM do Veículo Usado:')
         USADO_CHASSI = st.text_input('Chassi do Veículo Usado:')
-        USADO_COR = st.text_input('Cor:')
+        USADO_COR = st.text_input('Cor:', key='usado_cor')
         USADO_PY = st.text_input('Ano Produção:')
         USADO_MY = st.text_input('Ano Modelo:')
         USADO_KM = st.text_input('KM do Veículo Usado:')
