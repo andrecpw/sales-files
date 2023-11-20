@@ -180,6 +180,8 @@ def main():
 
         form_data = process_form_data(form_data)
 
+        pdf_paths = []
+
         # Always fill the primary PDF template
         pdf_paths.append(create_pdf_and_return_path("Templates/NOVA Ficha de Vendas V4 (FORM).pdf", form_data, "FV"))
 
