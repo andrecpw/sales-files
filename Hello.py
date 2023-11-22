@@ -39,6 +39,16 @@ def process_form_data(form_data):
     # Convert all string values to uppercase
     form_data = {key: value.upper() if isinstance(value, str) else value for key, value in form_data.items()}
 
+    # Process CPF and CNPJ
+    number = form_data.get(CPF, None)
+    if number:
+        if len(number) == 11:  # CPF
+            form_data["PESSOA_FISICA"] = "S"
+            return f"{number[:3]}.{number[3:6]}.{number[6:9]}-{number[9:]}"
+        elif len(number) == 14:  # CNPJ
+            form_data["PESSOA_FISICA"] = "N"
+            return f"{number[:2]}.{number[2:5]}.{number[5:8]}/{number[8:12]}-{number[12:]}"
+
     st.write("Form Submitted.")
     
     return form_data
@@ -64,7 +74,7 @@ def main():
     with st.form(key='sales_form'):
         st.subheader('Cliente:')
         CLIENTE = st.text_input('Nome:')
-        CPF = st.text_input('CPF:')
+        CPF = st.text_input('CPF/CNPJ (Somente números):')
         RG = st.text_input('RG:')
         DATA_NASCIMENTO = st.date_input(
             label='Data de Nascimento:',
@@ -200,16 +210,16 @@ def main():
 
         # Fill Procuração de Comprador based on CPF length
         if form_data.get("PLACA", "") != "":
-            if len(form_data.get("CPF", "")) == 11:
+            if form_data.get("PESSOA_FISICA", "") == "S":
                 pdf_paths.append(create_pdf_and_return_path("Templates/PROCURAÇÃO DE COMPRADOR PF.pdf", form_data, "Proc"))
-            elif len(form_data.get("CPF", "")) == 14:
+            elif form_data.get("PESSOA_FISICA", "") == "N":
                 pdf_paths.append(create_pdf_and_return_path("Templates/PROCURAÇÃO DE COMPRADOR PJ.pdf", form_data, "Proc"))
 
         # Fill Termo de Multas based on CPF length
         if form_data.get("USADO_VEICULO", "") != "":
-            if len(form_data.get("CPF", "")) == 11:
+            if form_data.get("PESSOA_FISICA", "") == "S":
                 pdf_paths.append(create_pdf_and_return_path("Templates/Termo de Multas - PF.pdf", form_data, "TM"))
-            elif len(form_data.get("CPF", "")) == 14:
+            elif form_data.get("PESSOA_FISICA", "") == "N":
                 pdf_paths.append(create_pdf_and_return_path("Templates/Termo de Multas - PJ.pdf", form_data, "TM"))
 
         # Create a ZIP file from the generated PDFs
