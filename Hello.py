@@ -57,7 +57,7 @@ def process_form_data(form_data):
 # Function to create a PDF and return its path with a custom name
 def create_pdf_and_return_path(template_path, form_data, prefix):
     # Create a temporary file with a custom name
-    cust = form_data.get("CLIENTE", "unk").replace(" ", "_")
+    cust = form_data.get("CLIENTE", "unk")
     fd, path = tempfile.mkstemp(suffix=".pdf", prefix=f"{prefix}_{cust}_")
     os.close(fd)  # Close the file descriptor
 
