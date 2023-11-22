@@ -2,6 +2,5 @@ altair
 numpy
 pandas
 pdfrw
-PyPDF2
 pydeck
 streamlit
