@@ -36,6 +36,9 @@ def process_form_data(form_data):
     for i in range(1, 7):
         form_data[f"NEGOCIACAO_{i}"] = negociacao_parts[i - 1] if i <= len(negociacao_parts) else ""
 
+    # Convert all string values to uppercase
+    form_data = {key: value.upper() if isinstance(value, str) else value for key, value in form_data.items()}
+
     st.write("Form Submitted.")
     
     return form_data
@@ -109,11 +112,10 @@ def main():
         BANCO = st.text_input('Banco:')
         N_PARCELAS = st.text_input('Número de Parcelas:')
         VALOR_PARCELA = st.text_input('Valor Parcela')
-        #TODO figure out the text area size
         NEGOCIACAO = st.text_area('Forma de Pagamento: (Máximo 6 linhas)')
+        OBSERVACAO = st.text_input('Observações (Cortesias):')
 
-        st.subheader('Observações:')
-        OBSERVACAO = st.text_input('Observações:')
+        st.subheader('Retirada:')
         AUTORIZACAO = st.checkbox('Outra pessoa irá retirar o veículo')
         AUTORIZACAO_AUTORIZADO = st.text_input('Nome da pessoa:')
 
