@@ -55,14 +55,14 @@ def process_form_data(form_data):
     return form_data
 
 # Function to create a PDF and return its path with a custom name
-def create_pdf_and_return_path(template_path, form_data, prefix):
+def create_pdf_and_return_path(template_path, form_data, prefix, font_size=None):
     # Create a temporary file with a custom name
     cust = form_data.get("CLIENTE", "unk")
     fd, path = tempfile.mkstemp(suffix=".pdf", prefix=f"{prefix}_{cust}_")
     os.close(fd)  # Close the file descriptor
 
     # Fill the PDF with data
-    fill_pdf(template_path, path, form_data)
+    fill_pdf(template_path, path, form_data, font_size)
     return path
 
 # Set page config
@@ -208,7 +208,7 @@ def main():
         pdf_paths = []
 
         # Always fill the primary PDF template
-        pdf_paths.append(create_pdf_and_return_path("Templates/NOVA Ficha de Vendas V4.pdf", form_data, "FV"))
+        pdf_paths.append(create_pdf_and_return_path("Templates/NOVA Ficha de Vendas V4.pdf", form_data, "FV", font_size=9))
 
         # Fill Procuração de Comprador based on CPF length
         if form_data.get("PLACA", "") != "":
@@ -236,7 +236,7 @@ def main():
                 st.download_button(
                     label="Download PDFs as ZIP",
                     data=file,
-                    file_name="filled_forms.zip",
+                    file_name=f"DOCS_{form_data["CLIENTE"]}.zip",
                     mime="application/zip"
                 )
 
