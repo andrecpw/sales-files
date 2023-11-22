@@ -232,11 +232,12 @@ def main():
                     os.remove(pdf)  # Remove the PDF file after adding it to the ZIP
 
             # Provide a download button for the ZIP file
+            cust = form_data.get("CLIENTE", "unk")
             with open(tmpzip.name, "rb") as file:
                 st.download_button(
                     label="Download PDFs as ZIP",
                     data=file,
-                    file_name=f"DOCS_{form_data["CLIENTE"]}.zip",
+                    file_name=f"DOCS_{cust}.zip",
                     mime="application/zip"
                 )
 
