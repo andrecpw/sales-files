@@ -37,7 +37,8 @@ def process_form_data(form_data):
         form_data[f"NEGOCIACAO_{i}"] = negociacao_parts[i - 1] if i <= len(negociacao_parts) else ""
 
     # Convert all string values to uppercase
-    form_data = {key: value.upper() if isinstance(value, str) else value for key, value in form_data.items()}
+    form_data = {key: (value.upper() if value is not None else None) 
+             for key, value in form_data.items() if isinstance(value, str)}
 
     # Process CPF and CNPJ
     number = form_data.get("CPF", None)
@@ -56,7 +57,8 @@ def process_form_data(form_data):
 # Function to create a PDF and return its path with a custom name
 def create_pdf_and_return_path(template_path, form_data, prefix):
     # Create a temporary file with a custom name
-    fd, path = tempfile.mkstemp(suffix=".pdf", prefix=f"{prefix}_{form_data['CLIENTE']}_")
+    cust = form_data.get("CLIENTE", "unk").replace(" ", "_")
+    fd, path = tempfile.mkstemp(suffix=".pdf", prefix=f"{prefix}_{cust}_")
     os.close(fd)  # Close the file descriptor
 
     # Fill the PDF with data
@@ -124,7 +126,7 @@ def main():
         VALOR_PARCELA = st.text_input('Valor Parcela')
         NEGOCIACAO = st.text_area('Forma de Pagamento: (Máximo 6 linhas)')
         OBSERVACAO = st.text_input('Observações (Cortesias):')
-        
+
         st.subheader('Serviços:')
         free = 'Loja'
         cust = 'Cliente'
