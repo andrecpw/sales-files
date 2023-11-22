@@ -18,14 +18,7 @@ def fill_pdf(input_pdf_path, output_pdf_path, form_data, font_size=None):
 
                         # Set font size if specified
                         if font_size:
-                            da_string = annotation.get("/DA")
-                            if da_string:
-                                # Attempt to modify only the font size part of the /DA string
-                                parts = da_string.split()
-                                if len(parts) > 2 and parts[1].isdigit():
-                                    parts[1] = str(font_size)
-                                    new_da_string = ' '.join(parts)
-                                    annotation.update(PdfDict(DA=new_da_string))
+                            annotation.update(PdfDict(DA=f"/Arial {font_size} Tf"))
 
     # Flag the form to update appearances
     if "/AcroForm" in template_pdf.Root:
