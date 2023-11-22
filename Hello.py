@@ -40,7 +40,7 @@ def process_form_data(form_data):
     form_data = {key: value.upper() if isinstance(value, str) else value for key, value in form_data.items()}
 
     # Process CPF and CNPJ
-    number = form_data.get(CPF, None)
+    number = form_data.get("CPF", None)
     if number:
         if len(number) == 11:  # CPF
             form_data["PESSOA_FISICA"] = "S"
@@ -124,11 +124,7 @@ def main():
         VALOR_PARCELA = st.text_input('Valor Parcela')
         NEGOCIACAO = st.text_area('Forma de Pagamento: (Máximo 6 linhas)')
         OBSERVACAO = st.text_input('Observações (Cortesias):')
-
-        st.subheader('Retirada:')
-        AUTORIZACAO = st.checkbox('Outra pessoa irá retirar o veículo')
-        AUTORIZACAO_AUTORIZADO = st.text_input('Nome da pessoa:')
-
+        
         st.subheader('Serviços:')
         free = 'Loja'
         cust = 'Cliente'
@@ -138,6 +134,10 @@ def main():
         ESCOLHA_PLACA = st.text_input('Observação Escolha de Placa:')
         OUTROS = st.text_input('Outros:')
         OUTROS_PGTO = st.radio('Outros', ['Não', cust, free], horizontal=True)
+
+        st.subheader('Retirada:')
+        AUTORIZACAO = st.checkbox('Outra pessoa irá retirar o veículo')
+        AUTORIZACAO_AUTORIZADO = st.text_input('Nome da pessoa:')
 
         # Form submit button
         submit_button = st.form_submit_button(label='Submit')
