@@ -137,7 +137,7 @@ def main():
         MY = st.text_input('Ano do Modelo:')
         CHASSI = st.text_input('Chassi:')
         PRECO = st.text_input('Preço:')
-        PLACA = st.text_input('Placa:')
+        PLACA = st.text_input('Placa: (Preencher se for usado)')
         RENAVAM = st.text_input('RENAVAM:')
 
         st.subheader('Veículo Usado:')
