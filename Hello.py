@@ -45,10 +45,10 @@ def process_form_data(form_data):
     if number:
         if len(number) == 11:  # CPF
             form_data["PESSOA_FISICA"] = "S"
-            return f"{number[:3]}.{number[3:6]}.{number[6:9]}-{number[9:]}"
+            form_data["CPF"] = f"{number[:3]}.{number[3:6]}.{number[6:9]}-{number[9:]}"
         elif len(number) == 14:  # CNPJ
             form_data["PESSOA_FISICA"] = "N"
-            return f"{number[:2]}.{number[2:5]}.{number[5:8]}/{number[8:12]}-{number[12:]}"
+            form_data["CPF"] = f"{number[:2]}.{number[2:5]}.{number[5:8]}/{number[8:12]}-{number[12:]}"
 
     st.write("Form Submitted.")
     
