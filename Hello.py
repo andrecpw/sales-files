@@ -255,6 +255,11 @@ def main():
         # Always fill the primary PDF template
         pdf_paths.append(create_pdf_and_return_path("Templates/NOVA Ficha de Vendas V4.pdf", form_data, "FV", font_size=9))
 
+        # Convert months to written
+        months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Março', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
+        month_index = int(form_data['MES'])
+        form_data['MES'] = months[month_index - 1]
+
         # Fill Procuração de Comprador based on CPF length
         if form_data.get("PLACA", "") != "" or form_data.get("USADO_VEICULO", "") != "":
             if form_data.get("PESSOA_FISICA", "") == "S":
