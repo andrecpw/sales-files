@@ -177,7 +177,7 @@ def main():
         AUTORIZACAO_AUTORIZADO = st.text_input('Nome da pessoa:')
 
         st.subheader('Assinatura:')
-        LOCAL = st.write('Local:')
+        LOCAL = st.text_input('Local:')
         DATA_ASSINATURA = st.date_input(label='Data:', format='DD/MM/YYYY')
 
         # Form submit button
