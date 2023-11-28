@@ -115,7 +115,7 @@ def main():
         DATA_NASCIMENTO = st.date_input(
             label='Data de Nascimento:',
             min_value=dt.date(1920, 1, 1),
-            format=("DD/MM/YYYY")
+            format=('DD/MM/YYYY')
         )
         CELULAR = st.text_input('Celular:')
         FONE = st.text_input('Telefone:')
@@ -176,6 +176,10 @@ def main():
         AUTORIZACAO = st.checkbox('Outra pessoa irá retirar o veículo')
         AUTORIZACAO_AUTORIZADO = st.text_input('Nome da pessoa:')
 
+        st.subheader('Assinatura:')
+        LOCAL = st.write('Local:')
+        DATA_ASSINATURA = st.date_input(label='Data:', format='DD/MM/YYYY')
+
         # Form submit button
         submit_button = st.form_submit_button(label='Submit')
 
@@ -185,7 +189,7 @@ def main():
             'CLIENTE': CLIENTE,
             'CPF': CPF,
             'RG': RG,
-            'DATA_NASCIMENTO': str(DATA_NASCIMENTO),
+            'DATA_NASCIMENTO': DATA_NASCIMENTO.strftime('%d/%m/%Y'),
             'FONE': FONE,
             'CELULAR': CELULAR,
             'RUA': RUA,
@@ -236,7 +240,12 @@ def main():
             'ESCOLHA_PLACA_PGTO': ESCOLHA_PLACA_PGTO,
             'ESCOLHA_PLACA': ESCOLHA_PLACA,
             'OUTROS': OUTROS,
-            'OUTROS_PGTO': OUTROS_PGTO
+            'OUTROS_PGTO': OUTROS_PGTO,
+
+            'LOCAL': LOCAL,
+            'DIA': str(DATA_ASSINATURA.day).zfill(2),
+            'MES': str(DATA_ASSINATURA.month).zfill(2),
+            'ANO': str(DATA_ASSINATURA.year)
         }
 
         form_data = process_form_data(form_data)
