@@ -131,7 +131,7 @@ def main():
         MARCA = st.text_input('Marca:')
         MODELO = st.text_input('Modelo:')
         OPCIONAIS = st.text_input('Opcionais:')
-        COMBUSTIVEL = st.radio('Combustível:', ["Total Flex", "Gasolina", "Diesel", "GNV", "Elétrico"])
+        COMBUSTIVEL = st.radio('Combustível:', ["Álcool / Gasolina", "Gasolina", "Diesel", "GNV", "Elétrico"])
         COR = st.text_input('Cor:')
         PY = st.text_input('Ano de Produção:')
         MY = st.text_input('Ano do Modelo:')
