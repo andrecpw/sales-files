@@ -136,13 +136,13 @@ def main():
         PY = st.text_input('Ano de Produção:')
         MY = st.text_input('Ano do Modelo:')
         CHASSI = st.text_input('Chassi:')
-        PRECO = st.text_input('Preço:')
+        PRECO = st.text_input('Preço (R$):')
         PLACA = st.text_input('Placa: (Preencher se for usado)')
         RENAVAM = st.text_input('RENAVAM:')
 
         st.subheader('Veículo Usado:')
         USADO_VEICULO = st.text_input('Veículo Usado:')
-        USADO_VALOR = st.text_input('Valor:')
+        USADO_VALOR = st.text_input('Valor (R$):')
         USADO_PLACA = st.text_input('Placa do Veículo Usado:')
         USADO_RENAVAM = st.text_input('RENAVAM do Veículo Usado:')
         USADO_CHASSI = st.text_input('Chassi do Veículo Usado:')
@@ -154,11 +154,11 @@ def main():
         LOJA = st.radio("Loja compradora:", ["Promenac Matriz", "Camvel", "Caninana", "Brava", "Porto Belo", "Penha"])
 
         st.subheader('Forma de Pagamento:')
-        NF = st.text_input('Valor Nota Fiscal:')
-        FINANCIAMENTO = st.text_input('Valor Financiado:')
+        NF = st.text_input('Valor Nota Fiscal (R$):')
+        FINANCIAMENTO = st.text_input('Valor Financiado (R$):')
         BANCO = st.text_input('Banco:')
         N_PARCELAS = st.text_input('Número de Parcelas:')
-        VALOR_PARCELA = st.text_input('Valor Parcela')
+        VALOR_PARCELA = st.text_input('Valor Parcela (R$)')
         NEGOCIACAO = st.text_area('Forma de Pagamento: (Máximo 6 linhas)')
         OBSERVACAO = st.text_input('Observações (Cortesias):')
 
@@ -167,6 +167,7 @@ def main():
         cust = 'Cliente'
         EMPLACAMENTO_PGTO = st.radio('Emplacamento/Transferência', [cust, free], horizontal=True)
         IPVA_PGTO = st.radio('IPVA', [cust, free], horizontal=True)
+        # TODO Emplacamento e IPVA campo valor
         ESCOLHA_PLACA_PGTO = st.radio('Escolha de Placa', ['Não', cust, free], horizontal=True)
         ESCOLHA_PLACA = st.text_input('Observação Escolha de Placa:')
         OUTROS = st.text_input('Outros:')
