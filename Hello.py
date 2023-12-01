@@ -187,113 +187,118 @@ def main():
 
     # Process the form data when the button is pressed
     if submit_button:
-        form_data = {
-            'CLIENTE': CLIENTE,
-            'CPF': CPF,
-            'RG': RG,
-            'DATA_NASCIMENTO': DATA_NASCIMENTO.strftime('%d/%m/%Y'),
-            'FONE': FONE,
-            'CELULAR': CELULAR,
-            'RUA': RUA,
-            'NUMERO': NUMERO,
-            'ENDERECO': RUA + ", " + NUMERO,
-            'BAIRRO': BAIRRO,
-            'CIDADE': CIDADE,
-            'ESTADO': ESTADO,
-            'CEP': CEP,
-            'EMAIL': EMAIL,
 
-            'MARCA': MARCA,
-            'MODELO': MODELO,
-            'VEICULO': MARCA + " / " + MODELO,
-            'OPCIONAIS': OPCIONAIS,
-            'COMBUSTIVEL': COMBUSTIVEL,
-            'COR': COR,
-            'PY_MY': PY + "/" + MY,
-            'CHASSI': CHASSI,
-            'PRECO': PRECO,
-            'PLACA': PLACA,
-            'RENAVAM': RENAVAM,
+        if not CPF.isdigit():
+            st.error("CPF/CNPJ inválido. Favor digitar apenas números.")
 
-            'USADO_VEICULO': USADO_VEICULO,
-            'USADO_VALOR': USADO_VALOR,
-            'USADO_PLACA': USADO_PLACA,
-            'USADO_RENAVAM': USADO_RENAVAM,
-            'USADO_CHASSI': USADO_CHASSI,
-            'USADO_COR': USADO_COR,
-            'USADO_PY': USADO_PY,
-            'USADO_MY': USADO_MY,
-            'USADO_PY_MY': USADO_PY + "/" + USADO_MY,
-            'USADO_KM': USADO_KM,
-            'USADO_QUITACAO': USADO_QUITACAO,
-            'LOJA': LOJA,
+        else:
+            form_data = {
+                'CLIENTE': CLIENTE,
+                'CPF': CPF,
+                'RG': RG,
+                'DATA_NASCIMENTO': DATA_NASCIMENTO.strftime('%d/%m/%Y'),
+                'FONE': FONE,
+                'CELULAR': CELULAR,
+                'RUA': RUA,
+                'NUMERO': NUMERO,
+                'ENDERECO': RUA + ", " + NUMERO,
+                'BAIRRO': BAIRRO,
+                'CIDADE': CIDADE,
+                'ESTADO': ESTADO,
+                'CEP': CEP,
+                'EMAIL': EMAIL,
 
-            'NF': NF,
-            'FINANCIAMENTO': FINANCIAMENTO,
-            'BANCO': BANCO,
-            'N_PARCELAS': N_PARCELAS,
-            'VALOR_PARCELA': VALOR_PARCELA,
-            'NEGOCIACAO': NEGOCIACAO,
-            'OBSERVACAO': OBSERVACAO,
-            'AUTORIZACAO': AUTORIZACAO,
-            'AUTORIZACAO_AUTORIZADO': AUTORIZACAO_AUTORIZADO,
-            'EMPLACAMENTO_PGTO': EMPLACAMENTO_PGTO,
-            'EMPLACAMENTO': EMPLACAMENTO,
-            'IPVA_PGTO': IPVA_PGTO,
-            'IPVA': IPVA,
-            'ESCOLHA_PLACA_PGTO': ESCOLHA_PLACA_PGTO,
-            'ESCOLHA_PLACA': ESCOLHA_PLACA,
-            'OUTROS': OUTROS,
-            'OUTROS_PGTO': OUTROS_PGTO,
+                'MARCA': MARCA,
+                'MODELO': MODELO,
+                'VEICULO': MARCA + " / " + MODELO,
+                'OPCIONAIS': OPCIONAIS,
+                'COMBUSTIVEL': COMBUSTIVEL,
+                'COR': COR,
+                'PY_MY': PY + "/" + MY,
+                'CHASSI': CHASSI,
+                'PRECO': PRECO,
+                'PLACA': PLACA,
+                'RENAVAM': RENAVAM,
 
-            'LOCAL': LOCAL,
-            'DIA': str(DATA_ASSINATURA.day).zfill(2),
-            'MES': str(DATA_ASSINATURA.month).zfill(2),
-            'ANO': str(DATA_ASSINATURA.year)
-        }
+                'USADO_VEICULO': USADO_VEICULO,
+                'USADO_VALOR': USADO_VALOR,
+                'USADO_PLACA': USADO_PLACA,
+                'USADO_RENAVAM': USADO_RENAVAM,
+                'USADO_CHASSI': USADO_CHASSI,
+                'USADO_COR': USADO_COR,
+                'USADO_PY': USADO_PY,
+                'USADO_MY': USADO_MY,
+                'USADO_PY_MY': USADO_PY + "/" + USADO_MY,
+                'USADO_KM': USADO_KM,
+                'USADO_QUITACAO': USADO_QUITACAO,
+                'LOJA': LOJA,
 
-        form_data = process_form_data(form_data)
+                'NF': NF,
+                'FINANCIAMENTO': FINANCIAMENTO,
+                'BANCO': BANCO,
+                'N_PARCELAS': N_PARCELAS,
+                'VALOR_PARCELA': VALOR_PARCELA,
+                'NEGOCIACAO': NEGOCIACAO,
+                'OBSERVACAO': OBSERVACAO,
+                'AUTORIZACAO': AUTORIZACAO,
+                'AUTORIZACAO_AUTORIZADO': AUTORIZACAO_AUTORIZADO,
+                'EMPLACAMENTO_PGTO': EMPLACAMENTO_PGTO,
+                'EMPLACAMENTO': EMPLACAMENTO,
+                'IPVA_PGTO': IPVA_PGTO,
+                'IPVA': IPVA,
+                'ESCOLHA_PLACA_PGTO': ESCOLHA_PLACA_PGTO,
+                'ESCOLHA_PLACA': ESCOLHA_PLACA,
+                'OUTROS': OUTROS,
+                'OUTROS_PGTO': OUTROS_PGTO,
 
-        pdf_paths = []
+                'LOCAL': LOCAL,
+                'DIA': str(DATA_ASSINATURA.day).zfill(2),
+                'MES': str(DATA_ASSINATURA.month).zfill(2),
+                'ANO': str(DATA_ASSINATURA.year)
+            }
 
-        # Always fill the primary PDF template
-        pdf_paths.append(create_pdf_and_return_path("Templates/NOVA Ficha de Vendas V5.pdf", form_data, "FV", font_size=9))
+            form_data = process_form_data(form_data)
 
-        # Convert months to written
-        months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Março', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
-        month_index = int(form_data['MES'])
-        form_data['MES'] = months[month_index - 1]
+            pdf_paths = []
 
-        # Fill Procuração de Comprador based on CPF length
-        if form_data.get("PLACA", "") != "" or form_data.get("USADO_VEICULO", "") != "":
-            if form_data.get("PESSOA_FISICA", "") == "S":
-                pdf_paths.append(create_pdf_and_return_path("Templates/PROCURAÇÃO DE COMPRADOR PF.pdf", form_data, "Proc"))
-            elif form_data.get("PESSOA_FISICA", "") == "N":
-                pdf_paths.append(create_pdf_and_return_path("Templates/PROCURAÇÃO DE COMPRADOR PJ.pdf", form_data, "Proc"))
+            # Always fill the primary PDF template
+            pdf_paths.append(create_pdf_and_return_path("Templates/NOVA Ficha de Vendas V5.pdf", form_data, "FV", font_size=9))
 
-        # Fill Termo de Multas based on CPF length
-        if form_data.get("USADO_VEICULO", "") != "":
-            if form_data.get("PESSOA_FISICA", "") == "S":
-                pdf_paths.append(create_pdf_and_return_path("Templates/Termo de Multas - PF.pdf", form_data, "TM"))
-            elif form_data.get("PESSOA_FISICA", "") == "N":
-                pdf_paths.append(create_pdf_and_return_path("Templates/Termo de Multas - PJ.pdf", form_data, "TM"))
+            # Convert months to written
+            months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Março', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
+            month_index = int(form_data['MES'])
+            form_data['MES'] = months[month_index - 1]
 
-        # Create a ZIP file from the generated PDFs
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".zip") as tmpzip:
-            with zipfile.ZipFile(tmpzip.name, 'w') as zipf:
-                for pdf in pdf_paths:
-                    zipf.write(pdf, os.path.basename(pdf))
-                    os.remove(pdf)  # Remove the PDF file after adding it to the ZIP
+            # Fill Procuração de Comprador based on CPF length
+            if form_data.get("PLACA", "") != "" or form_data.get("USADO_VEICULO", "") != "":
+                if form_data.get("PESSOA_FISICA", "") == "S":
+                    pdf_paths.append(create_pdf_and_return_path("Templates/PROCURAÇÃO DE COMPRADOR PF.pdf", form_data, "Proc"))
+                elif form_data.get("PESSOA_FISICA", "") == "N":
+                    pdf_paths.append(create_pdf_and_return_path("Templates/PROCURAÇÃO DE COMPRADOR PJ.pdf", form_data, "Proc"))
 
-            # Provide a download button for the ZIP file
-            cust = form_data.get("CLIENTE", "unk")
-            with open(tmpzip.name, "rb") as file:
-                st.download_button(
-                    label="Download PDFs as ZIP",
-                    data=file,
-                    file_name=f"DOCS_{cust}.zip",
-                    mime="application/zip"
-                )
+            # Fill Termo de Multas based on CPF length
+            if form_data.get("USADO_VEICULO", "") != "":
+                if form_data.get("PESSOA_FISICA", "") == "S":
+                    pdf_paths.append(create_pdf_and_return_path("Templates/Termo de Multas - PF.pdf", form_data, "TM"))
+                elif form_data.get("PESSOA_FISICA", "") == "N":
+                    pdf_paths.append(create_pdf_and_return_path("Templates/Termo de Multas - PJ.pdf", form_data, "TM"))
+
+            # Create a ZIP file from the generated PDFs
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".zip") as tmpzip:
+                with zipfile.ZipFile(tmpzip.name, 'w') as zipf:
+                    for pdf in pdf_paths:
+                        zipf.write(pdf, os.path.basename(pdf))
+                        os.remove(pdf)  # Remove the PDF file after adding it to the ZIP
+
+                # Provide a download button for the ZIP file
+                cust = form_data.get("CLIENTE", "unk")
+                with open(tmpzip.name, "rb") as file:
+                    st.download_button(
+                        label="Download PDFs as ZIP",
+                        data=file,
+                        file_name=f"DOCS_{cust}.zip",
+                        mime="application/zip"
+                    )
 
 if __name__ == "__main__":
     main()
