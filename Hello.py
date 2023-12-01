@@ -166,8 +166,9 @@ def main():
         free = 'Loja'
         cust = 'Cliente'
         EMPLACAMENTO_PGTO = st.radio('Emplacamento/Transferência', [cust, free], horizontal=True)
+        EMPLACAMENTO = st.text_input('Observação Emplacamento/Transferência:')
         IPVA_PGTO = st.radio('IPVA', [cust, free], horizontal=True)
-        # TODO Emplacamento e IPVA campo valor
+        IPVA = st.text_input('Observação IPVA:')
         ESCOLHA_PLACA_PGTO = st.radio('Escolha de Placa', ['Não', cust, free], horizontal=True)
         ESCOLHA_PLACA = st.text_input('Observação Escolha de Placa:')
         OUTROS = st.text_input('Outros:')
@@ -237,7 +238,9 @@ def main():
             'AUTORIZACAO': AUTORIZACAO,
             'AUTORIZACAO_AUTORIZADO': AUTORIZACAO_AUTORIZADO,
             'EMPLACAMENTO_PGTO': EMPLACAMENTO_PGTO,
+            'EMPLACAMENTO': EMPLACAMENTO,
             'IPVA_PGTO': IPVA_PGTO,
+            'IPVA': IPVA,
             'ESCOLHA_PLACA_PGTO': ESCOLHA_PLACA_PGTO,
             'ESCOLHA_PLACA': ESCOLHA_PLACA,
             'OUTROS': OUTROS,
@@ -254,7 +257,7 @@ def main():
         pdf_paths = []
 
         # Always fill the primary PDF template
-        pdf_paths.append(create_pdf_and_return_path("Templates/NOVA Ficha de Vendas V4.pdf", form_data, "FV", font_size=9))
+        pdf_paths.append(create_pdf_and_return_path("Templates/NOVA Ficha de Vendas V5.pdf", form_data, "FV", font_size=9))
 
         # Convert months to written
         months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Março', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
