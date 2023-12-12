@@ -25,3 +25,15 @@ def fill_pdf(input_pdf_path, output_pdf_path, form_data, font_size=None):
         template_pdf.Root.AcroForm.update(PdfDict(NeedAppearances=PdfObject("true")))
 
     PdfWriter().write(output_pdf_path, template_pdf)
+
+
+# Function to create a PDF and return its path with a custom name
+def create_pdf_and_return_path(template_path, form_data, prefix, font_size=None):
+    # Create a temporary file with a custom name
+    cust = form_data.get("CLIENTE", "unk")
+    fd, path = tempfile.mkstemp(suffix=".pdf", prefix=f"{prefix}_{cust}_")
+    os.close(fd)  # Close the file descriptor
+
+    # Fill the PDF with data
+    fill_pdf(template_path, path, form_data, font_size)
+    return path
