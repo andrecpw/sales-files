@@ -49,17 +49,6 @@ def main():
         RENAVAM = st.text_input('RENAVAM:')
 
         st.subheader('Veículo Usado:')
-
-        # Option for different proprietor
-        different_proprietor = st.checkbox('Proprietário diferente:')
-
-        if different_proprietor:
-            PROPRIETARIO = st.text_input('Proprietário:')
-            PROPRIETARIO_CPF_CNPJ = st.text_input('CPF/CNPJ do Proprietário (Somente números):')
-            PROPRIETARIO_RG = st.text_input('RG do Proprietário:')
-            PROPRIETARIO_ENDERECO = st.text_input('Endereço do Proprietário:')
-            PROPRIETARIO_CIDADE = st.text_input('Cidade do Proprietário:')
-
         USADO_VEICULO = st.text_input('Veículo Usado:')
         USADO_VALOR = st.text_input('Valor (R$):')
         USADO_PLACA = st.text_input('Placa do Veículo Usado:')
@@ -175,16 +164,6 @@ def main():
                 'MES': str(DATA_ASSINATURA.month).zfill(2),
                 'ANO': str(DATA_ASSINATURA.year)
             }
-
-            # Add proprietor's details to form_data if different proprietor is selected
-            if different_proprietor:
-                form_data.update({
-                    'PROPRIETARIO': PROPRIETARIO,
-                    'PROPRIETARIO_CPF_CNPJ': PROPRIETARIO_CPF_CNPJ,
-                    'PROPRIETARIO_RG': PROPRIETARIO_RG,
-                    'PROPRIETARIO_ENDERECO': PROPRIETARIO_ENDERECO,
-                    'PROPRIETARIO_CIDADE': PROPRIETARIO_CIDADE,
-                })
 
             form_data = process_form_data(form_data)
 
