@@ -65,7 +65,7 @@ def process_form_data(form_data):
             form_data["LOJA_CIDADE"] = "PORTO BELO / SC"
         elif form_data.get("LOJA") == "Penha":
             form_data["LOJA"] = "REVENDEDORES PROMENAC LTDA"
-            form_data["LOJA_CNPJ"] = "84.290.907/0004-75"
+            form_data["LOJA_CNPJ"] = "84.290.907/0006-37"
             form_data["LOJA_ENDERECO"] = "AV PREFEITO EUGENIO KRAUSE, N° 283 - CENTRO"
             form_data["LOJA_CIDADE"] = "PENHA / SC"
 
