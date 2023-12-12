@@ -1,5 +1,6 @@
 import pdfrw
 from pdfrw import PdfReader, PdfWriter, PdfDict, PdfObject
+import tempfile
 
 def fill_pdf(input_pdf_path, output_pdf_path, form_data, font_size=None):
     template_pdf = PdfReader(input_pdf_path)
