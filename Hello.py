@@ -175,7 +175,7 @@ def main():
             pdf_paths = []
 
             # Always fill the primary PDF template
-            pdf_paths.append(create_pdf_and_return_path("Templates\Ficha de vendas - V5.pdf", form_data, "FV", font_size=9))
+            pdf_paths.append(create_pdf_and_return_path("Templates/Ficha de vendas - V5.pdf", form_data, "FV", font_size=9))
 
             # Convert months to written
             months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Março', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
