@@ -45,7 +45,7 @@ def process_form_data(form_data):
         elif form_data.get("LOJA") == "Caninana":
             form_data["LOJA"] = "REVENDEDORES PROMENAC LTDA"
             form_data["LOJA_CNPJ"] = "84.290.907/0003-94"
-            form_data["LOJA_ENDERECO"] = "IRINEU BORNHAUSEN, N° 301 - SÃO JOÃO"
+            form_data["LOJA_ENDERECO"] = "AV. IRINEU BORNHAUSEN, N° 301 - SÃO JOÃO"
             form_data["LOJA_CIDADE"] = "ITAJAÍ / SC"
         elif form_data.get("LOJA") == "Brava":
             form_data["LOJA"] = "REVENDEDORES PROMENAC LTDA"
@@ -60,8 +60,13 @@ def process_form_data(form_data):
         elif form_data.get("LOJA") == "Penha":
             form_data["LOJA"] = "REVENDEDORES PROMENAC LTDA"
             form_data["LOJA_CNPJ"] = "84.290.907/0006-37"
-            form_data["LOJA_ENDERECO"] = "AV PREFEITO EUGENIO KRAUSE, N° 283 - CENTRO"
+            form_data["LOJA_ENDERECO"] = "AV. PREFEITO EUGENIO KRAUSE, N° 283 - CENTRO"
             form_data["LOJA_CIDADE"] = "PENHA / SC"
+        elif form_data["LOJA"] == "Navegantes":
+            form_data["LOJA"] = "REVENDEDORES PROMENAC LTDA"
+            form_data["LOJA_CNPJ"] = "84.290.907/0007-18"
+            form_data["LOJA_ENDERECO"] = "AV. NEREU LIBERATO NUNES, N° 757 - SÃO DOMINGOS"
+            form_data["LOJA_CIDADE"] = "NAVEGANTES / SC"
 
 
     # Convert all string values to uppercase

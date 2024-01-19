@@ -62,7 +62,7 @@ def main():
         USADO_MY = st.text_input('Ano Modelo:')
         USADO_KM = st.text_input('KM do Veículo Usado:')
         USADO_QUITACAO = st.text_input('Quitação:')
-        LOJA = st.radio("Loja compradora:", ["Promenac Matriz", "Camvel", "Caninana", "Brava", "Porto Belo", "Penha"])
+        LOJA = st.radio("Loja compradora:", ["Promenac Matriz", "Camvel", "Caninana", "Brava", "Porto Belo", "Penha", "Navegantes"])
 
         st.subheader('Forma de Pagamento:')
         NF = st.text_input('Valor Nota Fiscal (R$):')
