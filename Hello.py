@@ -65,12 +65,12 @@ def main():
         LOJA = st.radio("Loja compradora:", ["Promenac Matriz", "Camvel", "Caninana", "Brava", "Porto Belo", "Penha", "Navegantes"])
 
         OUTRO_PROPRIETARIO = st.checkbox("Outro Proprietário?")
-        PROPRIETARIO_NOME = st.text_input('Nome:')
-        PROPRIETARIO_CPF = st.text_input('CPF/CNPJ:')
-        PROPRIETARIO_RG = st.text_input('RG:')
-        PROPRIETARIO_ENDERECO = st.text_input('Endereço:')
-        PROPRIETARIO_CIDADE = st.text_input('Cidade:')
-        PROPRIETARIO_ESTADO = st.text_input('Estado:')
+        PROPRIETARIO_NOME = st.text_input('Nome do Proprietário:')
+        PROPRIETARIO_CPF = st.text_input('CPF/CNPJ do Proprietário:')
+        PROPRIETARIO_RG = st.text_input('RG do Proprietário:')
+        PROPRIETARIO_ENDERECO = st.text_input('Endereço do Proprietário:')
+        PROPRIETARIO_CIDADE = st.text_input('Cidade do Proprietário:')
+        PROPRIETARIO_ESTADO = st.text_input('Estado do Proprietário:')
 
         st.subheader('Forma de Pagamento:')
         NF = st.text_input('Valor Nota Fiscal (R$):')
