@@ -3,7 +3,7 @@ import datetime as dt
 import tempfile
 import zipfile
 import os
-from Scripts.pdf_generator import fill_pdf, create_pdf_and_return_path
+from Scripts.pdf_generator import create_pdf_and_return_path
 from Scripts.data_processing import process_form_data, process_other_proprietor, process_cpf
 
 
