@@ -53,9 +53,3 @@ def get_pdf_form_field_names(pdf_path):
                     field_names.append(field_name)
 
     return field_names
-
-# Example usage
-pdf_path = 'Templates\Ficha de vendas - V6.pdf'
-form_field_names = get_pdf_form_field_names(pdf_path)
-print(form_field_names)
-print(len(form_field_names))
