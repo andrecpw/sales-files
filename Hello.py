@@ -16,6 +16,8 @@ def main():
 
     # Use a form for better user experience (submits all at once)
     with st.form(key='sales_form'):
+        TIPO_VENDA = st.radio('Tipo de Venda:', ["Varejo", "Faixa 0", "Faixa 1", "Faixa 2", "ABLA"])
+
         st.subheader('Cliente:')
         CLIENTE = st.text_input('Nome:')
         CPF = st.text_input('CPF/CNPJ (Somente números):')
@@ -101,6 +103,7 @@ def main():
 
         else:
             form_data = {
+                'TIPO_VENDA': TIPO_VENDA,
                 'CLIENTE': CLIENTE,
                 'CPF': CPF,
                 'RG': RG,
@@ -134,8 +137,6 @@ def main():
                 'USADO_RENAVAM': USADO_RENAVAM,
                 'USADO_CHASSI': USADO_CHASSI,
                 'USADO_COR': USADO_COR,
-                'USADO_PY': USADO_PY,
-                'USADO_MY': USADO_MY,
                 'USADO_PY_MY': USADO_PY + "/" + USADO_MY,
                 'USADO_KM': USADO_KM,
                 'USADO_QUITACAO': USADO_QUITACAO,
@@ -172,7 +173,7 @@ def main():
             pdf_paths = []
 
             # Always fill the primary PDF template
-            pdf_paths.append(create_pdf_and_return_path("Templates/NOVA Ficha de Vendas V5.pdf", form_data, "FV", font_size=9))
+            pdf_paths.append(create_pdf_and_return_path("Templates/Ficha de vendas - V6.pdf", form_data, "FV", font_size=9))
 
             # Convert months to written
             months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Março', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']

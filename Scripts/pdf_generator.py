@@ -39,3 +39,23 @@ def create_pdf_and_return_path(template_path, form_data, prefix, font_size=None)
     # Fill the PDF with data
     fill_pdf(template_path, path, form_data, font_size)
     return path
+
+def get_pdf_form_field_names(pdf_path):
+    pdf = pdfrw.PdfReader(pdf_path)
+    field_names = []
+
+    for page in pdf.pages:
+        annotations = page.get('/Annots')
+        if annotations:
+            for annotation in annotations:
+                if annotation.get('/Subtype') == '/Widget' and annotation.get('/T'):
+                    field_name = annotation['/T'][1:-1]  # Remove parentheses
+                    field_names.append(field_name)
+
+    return field_names
+
+# Example usage
+pdf_path = 'Templates\Ficha de vendas - V6.pdf'
+form_field_names = get_pdf_form_field_names(pdf_path)
+print(form_field_names)
+print(len(form_field_names))
