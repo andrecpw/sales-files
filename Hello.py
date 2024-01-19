@@ -51,7 +51,8 @@ def main():
         RENAVAM = st.text_input('RENAVAM:')
 
         st.subheader('Veículo Usado:')
-        USADO_VEICULO = st.text_input('Veículo Usado:')
+        USADO_MARCA = st.text_input('Marca Veículo Usado:')
+        USADO_MODELO = st.text_input('Modelo Veículo Usado:')
         USADO_VALOR = st.text_input('Valor (R$):')
         USADO_PLACA = st.text_input('Placa do Veículo Usado:')
         USADO_RENAVAM = st.text_input('RENAVAM do Veículo Usado:')
@@ -131,7 +132,7 @@ def main():
                 'PLACA': PLACA,
                 'RENAVAM': RENAVAM,
 
-                'USADO_VEICULO': USADO_VEICULO,
+                'USADO_VEICULO': USADO_MARCA + " / " + USADO_MODELO,
                 'USADO_VALOR': USADO_VALOR,
                 'USADO_PLACA': USADO_PLACA,
                 'USADO_RENAVAM': USADO_RENAVAM,
