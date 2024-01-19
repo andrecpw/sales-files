@@ -3,8 +3,8 @@ import datetime as dt
 import tempfile
 import zipfile
 import os
-from Scripts.pdf_generator import create_pdf_and_return_path
-from Scripts.data_processing import process_form_data, process_other_proprietor, process_cpf
+from Scripts.pdf_generator import fill_pdf, create_pdf_and_return_path
+from Scripts.data_processing import process_form_data
 
 
 # Set page config
@@ -63,14 +63,6 @@ def main():
         USADO_KM = st.text_input('KM do Veículo Usado:')
         USADO_QUITACAO = st.text_input('Quitação:')
         LOJA = st.radio("Loja compradora:", ["Promenac Matriz", "Camvel", "Caninana", "Brava", "Porto Belo", "Penha", "Navegantes"])
-
-        OUTRO_PROPRIETARIO = st.checkbox("Outro Proprietário?")
-        PROPRIETARIO_NOME = st.text_input('Nome do Proprietário:')
-        PROPRIETARIO_CPF = st.text_input('CPF/CNPJ do Proprietário:')
-        PROPRIETARIO_RG = st.text_input('RG do Proprietário:')
-        PROPRIETARIO_ENDERECO = st.text_input('Endereço do Proprietário:')
-        PROPRIETARIO_CIDADE = st.text_input('Cidade do Proprietário:')
-        PROPRIETARIO_ESTADO = st.text_input('Estado do Proprietário:')
 
         st.subheader('Forma de Pagamento:')
         NF = st.text_input('Valor Nota Fiscal (R$):')
@@ -151,14 +143,6 @@ def main():
                 'USADO_QUITACAO': USADO_QUITACAO,
                 'LOJA': LOJA,
 
-                'OUTRO_PROPRIETARIO': OUTRO_PROPRIETARIO,
-                'PROPRIETARIO_NOME': PROPRIETARIO_NOME,
-                'PROPRIETARIO_CPF': PROPRIETARIO_CPF,
-                'PROPRIETARIO_RG': PROPRIETARIO_RG,
-                'PROPRIETARIO_ENDERECO': PROPRIETARIO_ENDERECO,
-                'PROPRIETARIO_CIDADE': PROPRIETARIO_CIDADE,
-                'PROPRIETARIO_ESTADO': PROPRIETARIO_ESTADO,
-
                 'NF': NF,
                 'FINANCIAMENTO': FINANCIAMENTO,
                 'BANCO': BANCO,
@@ -203,11 +187,6 @@ def main():
                     pdf_paths.append(create_pdf_and_return_path("Templates/PROCURAÇÃO DE COMPRADOR PF.pdf", form_data, "Proc"))
                 elif form_data.get("PESSOA_FISICA", "") == "N":
                     pdf_paths.append(create_pdf_and_return_path("Templates/PROCURAÇÃO DE COMPRADOR PJ.pdf", form_data, "Proc"))
-
-            # Change customer values if other proprietor
-            if form_data["OUTRO_PROPRIETARIO"] == True:
-                form_data = process_other_proprietor(form_data)
-                form_data = process_cpf(form_data)
 
             # Fill Termo de Multas based on CPF length
             if form_data.get("USADO_VEICULO", "") != "":
