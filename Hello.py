@@ -16,7 +16,7 @@ def main():
 
     # Use a form for better user experience (submits all at once)
     with st.form(key='sales_form'):
-        TIPO_VENDA = st.radio('Tipo de Venda:', ["Varejo", "Faixa 0", "Faixa 1", "Faixa 2", "ABLA"])
+        TIPO_VENDA = st.radio('Tipo de Venda:', ["Varejo", "Faixa 0", "Faixa 1 (Produtor Rural)", "Faixa 2", "ABLA", "PCD", "Funcionário"])
 
         st.subheader('Cliente:')
         CLIENTE = st.text_input('Nome:')
