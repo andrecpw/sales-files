@@ -64,7 +64,7 @@ def main():
         USADO_QUITACAO = st.text_input('Quitação:')
         LOJA = st.radio("Loja compradora:", ["Promenac Matriz", "Camvel", "Caninana", "Brava", "Porto Belo", "Penha", "Navegantes"])
 
-        OUTRO_PROPRIETARIO = st.checkbox("Outro Proprietário?")
+        st.subheader('Preencher se for diferente Proprietário')
         PROPRIETARIO_NOME = st.text_input('Nome do Proprietário:')
         PROPRIETARIO_CPF = st.text_input('CPF/CNPJ do Proprietário:')
         PROPRIETARIO_RG = st.text_input('RG do Proprietário:')
@@ -151,7 +151,6 @@ def main():
                 'USADO_QUITACAO': USADO_QUITACAO,
                 'LOJA': LOJA,
 
-                'OUTRO_PROPRIETARIO': OUTRO_PROPRIETARIO,
                 'PROPRIETARIO_NOME': PROPRIETARIO_NOME,
                 'PROPRIETARIO_CPF': PROPRIETARIO_CPF,
                 'PROPRIETARIO_RG': PROPRIETARIO_RG,
@@ -205,7 +204,8 @@ def main():
                     pdf_paths.append(create_pdf_and_return_path("Templates/PROCURAÇÃO DE COMPRADOR PJ.pdf", form_data, "Proc"))
 
             # Change customer values if other proprietor
-            if form_data["OUTRO_PROPRIETARIO"] == True:
+            if form_data.get("PROPRIETARIO_NOME", "") != "":
+                cust = form_data.get("CLIENTE", "unk")
                 form_data = process_other_proprietor(form_data)
                 form_data = process_cpf(form_data)
 
@@ -224,7 +224,6 @@ def main():
                         os.remove(pdf)  # Remove the PDF file after adding it to the ZIP
 
                 # Provide a download button for the ZIP file
-                cust = form_data.get("CLIENTE", "unk")
                 with open(tmpzip.name, "rb") as file:
                     st.download_button(
                         label="Download PDFs as ZIP",
