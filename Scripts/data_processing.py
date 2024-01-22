@@ -1,3 +1,19 @@
+def clean_number(input_string):
+    return ''.join([char for char in input_string if char.isdigit()])
+
+def process_cpf(form_data):
+    # Process CPF and CNPJ
+    number = form_data.get("CPF", None)
+    number = clean_number(number)
+    if number:
+        if len(number) == 11:  # CPF
+            form_data["PESSOA_FISICA"] = "S"
+            form_data["CPF"] = f"{number[:3]}.{number[3:6]}.{number[6:9]}-{number[9:]}"
+        elif len(number) == 14:  # CNPJ
+            form_data["PESSOA_FISICA"] = "N"
+            form_data["CPF"] = f"{number[:2]}.{number[2:5]}.{number[5:8]}/{number[8:12]}-{number[12:]}"
+    
+    return form_data
 
 # Function to process the form data (this is where you would add your PDF filling logic)
 def process_form_data(form_data):
@@ -73,14 +89,16 @@ def process_form_data(form_data):
     form_data = {key: (value.upper() if value is not None else None) 
              for key, value in form_data.items() if isinstance(value, str)}
 
-    # Process CPF and CNPJ
-    number = form_data.get("CPF", None)
-    if number:
-        if len(number) == 11:  # CPF
-            form_data["PESSOA_FISICA"] = "S"
-            form_data["CPF"] = f"{number[:3]}.{number[3:6]}.{number[6:9]}-{number[9:]}"
-        elif len(number) == 14:  # CNPJ
-            form_data["PESSOA_FISICA"] = "N"
-            form_data["CPF"] = f"{number[:2]}.{number[2:5]}.{number[5:8]}/{number[8:12]}-{number[12:]}"
+    form_data = process_cpf(form_data)
     
+    return form_data
+
+def process_other_proprietor(form_data):
+    form_data['CLIENTE'] = form_data['PROPRIETARIO_NOME']
+    form_data['CPF'] = form_data['PROPRIETARIO_CPF']
+    form_data['RG'] = form_data['PROPRIETARIO_RG']
+    form_data['ENDERECO'] = form_data['PROPRIETARIO_ENDERECO']
+    form_data['CIDADE'] = form_data['PROPRIETARIO_CIDADE']
+    form_data['ESTADO'] = form_data['PROPRIETARIO_ESTADO']
+
     return form_data
