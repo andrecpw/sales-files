@@ -5,6 +5,7 @@ import zipfile
 import os
 from Scripts.pdf_generator import create_pdf_and_return_path
 from Scripts.data_processing import process_form_data, process_other_proprietor, process_cpf
+from Scripts.read_crlv import process_crlv, get_crlv_data
 
 
 # Set page config
@@ -14,9 +15,19 @@ def main():
 
     st.title('Ficha de Vendas')
 
+    # Initialize session state variables for used vehicle fields if not already present
+    fields = [
+        'usado_marca', 'usado_modelo', 'usado_placa', 
+        'usado_renavam', 'usado_chassi', 'usado_py', 
+        'usado_my', 'usado_cor'
+    ]
+    for field in fields:
+        if field not in st.session_state:
+            st.session_state[field] = ''
+
     # Use a form for better user experience (submits all at once)
     with st.form(key='sales_form'):
-        TIPO_VENDA = st.radio('Tipo de Venda:', ["Varejo", "Faixa 0 (Produtor Rural)", "Faixa 1", "Faixa 2", "ABLA", "PCD", "Funcionário"])
+        TIPO_VENDA = st.radio('Tipo de Venda:', ["Varejo", "Faixa 0 (Produtor Rural)", "Faixa 1", "Faixa 2", "ABLA", "PCD", "Funcionário", "COMPRA"])
 
         st.subheader('Cliente:')
         CLIENTE = st.text_input('Nome:')
@@ -51,15 +62,53 @@ def main():
         RENAVAM = st.text_input('RENAVAM:')
 
         st.subheader('Veículo Usado:')
-        USADO_MARCA = st.text_input('Marca Veículo Usado:')
-        USADO_MODELO = st.text_input('Modelo Veículo Usado:')
+
+        uploaded_file = st.file_uploader("Foto CRLV", type=["jpg", "jpeg", "png", "pdf"])
+
+        # Initialize session state for managing upload
+        if 'process_file' not in st.session_state:
+            st.session_state.process_file = False
+
+        process_button = st.form_submit_button("Process CRLV")
+        
+        # Check if there's a file and the process button was pressed
+        if uploaded_file is not None and process_button:
+            st.session_state.process_file = True
+        else:
+            st.session_state.process_file = False
+
+        if st.session_state.process_file:
+            content = process_crlv(uploaded_file)
+            try:
+                crlv_usado_data = get_crlv_data(content)
+                # Update session state based on processed data
+                # Only attempt to split if "marca_modelo" is in crlv_usado_data and not None
+                if crlv_usado_data.get("marca_modelo"):
+                    marca_modelo_split = crlv_usado_data["marca_modelo"].split("/")
+                    st.session_state.usado_marca = marca_modelo_split[0].strip() if len(marca_modelo_split) > 0 else ""
+                    st.session_state.usado_modelo = marca_modelo_split[1].strip() if len(marca_modelo_split) > 1 else ""
+                else:
+                    st.session_state.usado_marca = ''
+                    st.session_state.usado_modelo = ''
+                st.session_state.usado_placa = crlv_usado_data.get('placa', "")
+                st.session_state.usado_renavam = crlv_usado_data.get('renavam', "")
+                st.session_state.usado_chassi = crlv_usado_data.get('chassi', "")
+                st.session_state.usado_py = crlv_usado_data.get('py', "")
+                st.session_state.usado_my = crlv_usado_data.get('my', "")
+                st.session_state.usado_cor = crlv_usado_data.get('cor', "")
+                st.write("Checar informações!")
+            except Exception as e:
+                st.error(f"Error processing document: {e}")
+
+        USADO_MARCA = st.text_input('Marca Veículo Usado:', value=st.session_state.usado_marca)
+        USADO_MODELO = st.text_input('Modelo Veículo Usado:', value=st.session_state.usado_modelo)
+        USADO_PY = st.text_input('Ano Produção:', value=st.session_state.usado_py)
+        USADO_MY = st.text_input('Ano Modelo:', value=st.session_state.usado_my)
+        USADO_PLACA = st.text_input('Placa do Veículo Usado:', value=st.session_state.usado_placa)
+        USADO_RENAVAM = st.text_input('RENAVAM do Veículo Usado:', value=st.session_state.usado_renavam)
+        USADO_CHASSI = st.text_input('Chassi do Veículo Usado:', value=st.session_state.usado_chassi)
+        USADO_COR = st.text_input('Cor do Veículo Usado:', value=st.session_state.usado_cor)
         USADO_VALOR = st.text_input('Valor (R$):')
-        USADO_PLACA = st.text_input('Placa do Veículo Usado:')
-        USADO_RENAVAM = st.text_input('RENAVAM do Veículo Usado:')
-        USADO_CHASSI = st.text_input('Chassi do Veículo Usado:')
-        USADO_COR = st.text_input('Cor:', key='usado_cor')
-        USADO_PY = st.text_input('Ano Produção:')
-        USADO_MY = st.text_input('Ano Modelo:')
         USADO_KM = st.text_input('KM do Veículo Usado:')
         USADO_QUITACAO = st.text_input('Quitação:')
         LOJA = st.radio("Loja compradora:", ["Promenac Matriz", "Camvel", "Caninana", "Brava", "Porto Belo", "Penha", "Navegantes"])
