@@ -229,7 +229,9 @@ def main():
                 'LOCAL': LOCAL,
                 'DIA': str(DATA_ASSINATURA.day).zfill(2),
                 'MES': str(DATA_ASSINATURA.month).zfill(2),
-                'ANO': str(DATA_ASSINATURA.year)
+                'ANO': str(DATA_ASSINATURA.year),
+
+                'TIMESTAMP': str(dt.datetime.now())
             }
 
             form_data = process_form_data(form_data)
