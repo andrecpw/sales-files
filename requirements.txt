@@ -2,3 +2,4 @@ pdfrw
 google-cloud-vision
 pdf2image
 notion_client
+boto3

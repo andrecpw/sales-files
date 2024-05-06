@@ -7,6 +7,7 @@ from Scripts.pdf_generator import create_pdf_and_return_path
 from Scripts.data_processing import process_form_data, process_other_proprietor, process_cpf
 from Scripts.read_crlv import process_crlv, get_crlv_data
 from Scripts.notion_handler import initialize_notion_client, add_form_data_to_notion
+from Scripts.dynamo_handler import gvision_dynamodb_preprocess, store_data
 
 
 # Set page config
@@ -98,6 +99,8 @@ def main():
                 st.session_state.usado_my = crlv_usado_data.get('my', "")
                 st.session_state.usado_cor = crlv_usado_data.get('cor', "")
                 st.write("Checar informações!")
+                crlv_usado_data = gvision_dynamodb_preprocess(crlv_usado_data)
+                store_data('GVisionEntries', crlv_usado_data)
             except Exception as e:
                 st.error(f"Error processing document: {e}")
 
