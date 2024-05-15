@@ -9,7 +9,15 @@ def gvision_dynamodb_preprocess(data):
         if data[key] is None:
             data[key] = 'empty'  # Replace None with an empty string
     data['timestamp'] = dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    data['chassi+tstp'] = data['chassi'] + data['timestamp']
+    data['chassi+tstp'] = data['chassi'] + ' at ' + data['timestamp']
+    return data
+
+def fv_dynamodb_preprocess(data):
+    for key in data.keys():
+        if data[key] is None:
+            data[key] = 'empty'  # Replace None with an empty string
+    data['timestamp'] = dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    data['cpf+tstp'] = data['CPF'] + ' at ' + data['timestamp']    
     return data
 
 def store_data(table_name, data):
@@ -32,6 +40,6 @@ def store_data(table_name, data):
         if response['ResponseMetadata']['HTTPStatusCode'] == 200:
             print('Successfully inserted data into DynamoDB')
         else:
-            print('Data insertion to DynamoDB was unsuccessful')
+            print('Response:', response)
     except ClientError as e:
         print('Failed to insert data into DynamoDB: {}'.format(e))

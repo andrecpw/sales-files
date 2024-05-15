@@ -7,7 +7,7 @@ from Scripts.pdf_generator import create_pdf_and_return_path
 from Scripts.data_processing import process_form_data, process_other_proprietor, process_cpf
 from Scripts.read_crlv import process_crlv, get_crlv_data
 from Scripts.notion_handler import initialize_notion_client, add_form_data_to_notion
-from Scripts.dynamo_handler import gvision_dynamodb_preprocess, store_data
+from Scripts.dynamo_handler import gvision_dynamodb_preprocess, fv_dynamodb_preprocess, store_data
 
 
 # Set page config
@@ -239,8 +239,11 @@ def main():
 
             form_data = process_form_data(form_data)
 
-            notion_client = initialize_notion_client()
-            add_form_data_to_notion(notion_client, form_data)
+            #notion_client = initialize_notion_client()
+            #add_form_data_to_notion(notion_client, form_data)
+
+            fv_data = fv_dynamodb_preprocess(form_data)
+            store_data('FichasDeVendas', fv_data)
 
             st.write("Form Submitted.")
 
