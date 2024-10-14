@@ -11,7 +11,7 @@ from Scripts.dynamo_handler import gvision_dynamodb_preprocess, fv_dynamodb_prep
 
 
 # Set page config
-st.set_page_config(page_title="Ficha de Vendas Teste", page_icon="📝")
+st.set_page_config(page_title="Ficha de Vendas", page_icon="📝")
 
 def main():
 
